@@ -4,6 +4,7 @@ import {
   Switch
 } from 'react-router-dom'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import './index.css'
 import Home from './Home.js'
 
 function App() {
