@@ -1,3 +1,4 @@
+import React, { Component }  from 'react';
 import Login from './Login.js'
 
 function Home() {

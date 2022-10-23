@@ -1,3 +1,4 @@
+import React, { Component }  from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -6,6 +7,7 @@ import {
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.js'
+import Auth from './Auth.js'
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/auth">
+              <Auth />
             </Route>
           </Switch>
         </Router>
