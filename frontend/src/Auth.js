@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 //import Passport from 'passport-42'
 
 // export const FortyTwoStrategy = new Passport.Strategy()
@@ -14,6 +15,7 @@ import React, { Component } from 'react';
 // }
 // ));
 // passport.authenticate('42');
+
 class Auth extends Component {
     constructor(props) {
         super(props);
