@@ -4,7 +4,7 @@ import Login from './Login.js'
 function Home() {
     return (
         <>
-            <div className="d-flex align-items-center justify-content-center">
+            <div className="">
                 <Login></Login>
             </div>
         </>

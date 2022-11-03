@@ -10,7 +10,7 @@ import { User } from '@prisma/client';
 import { plainToClass } from 'class-transformer';
 
 /* PRISMA */
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { UserDto } from './dto';
 
 
@@ -74,20 +74,21 @@ async updateEmail(id: number, newEmail: string) {
 		return updateUser;
 	}
 
-	async getAllUsers() {
-		const users = await this.prisma.user.findMany({
-			orderBy: { id: 'asc' },
-		});
-		const userListDtos: UserDto[] = [];
-		for (const user_ of users) {
-			const user = await this.prisma.user.findUnique({
-				where: {
-					id: user_.id,
-				},
-				rejectOnNotFound: true,
+		async getAllUsers() {
+			const users = await this.prisma.user.findMany({
+				orderBy: { id: 'asc' },
 			});
-			const dtoUser = plainToClass(UserDto, user);
-			userListDtos.push(dtoUser);
+			const userListDtos: UserDto[] = [];
+			for (const user_ of users) {
+				const user = await this.prisma.user.findUnique({
+					where: {
+						id: user_.id,
+					},
+					rejectOnNotFound: true,
+				});
+				const dtoUser = plainToClass(UserDto, user);
+				userListDtos.push(dtoUser);
+			}
+			return userListDtos;
 		}
-		return userListDtos;
 	}
