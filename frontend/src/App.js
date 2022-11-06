@@ -7,21 +7,25 @@ import {
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.js'
+import Navbar from './Navbar.js'
 import NotFound from './NotFound.js'
 
 function App() {
 
   return (
-      <div className="App d-flex align-items-center justify-content-center">
+      
         <Router >
+          <Navbar />
+          <div className="App d-flex align-items-center justify-content-center">
           <Switch>
             <Route exact path="/">
               <Home />
             </Route>
             <Route component={NotFound}/>
           </Switch>
+          </div>
         </Router>
-      </div>
+      
   );
 }
 
