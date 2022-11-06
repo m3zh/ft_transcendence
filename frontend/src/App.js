@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,8 +7,6 @@ import {
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.js'
-import Login from './Login.js'
-import useToken from './Auth.js'
 import NotFound from './NotFound.js'
 
 function App() {

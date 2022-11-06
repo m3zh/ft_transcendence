@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React from 'react';
 import useToken from './Auth.js'
 import Login from './Login.js'
 
