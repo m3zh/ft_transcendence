@@ -1,8 +1,15 @@
-import React, { Component } from "react";
+import React, { useCallback, useState } from "react";
+import PropTypes from 'prop-types';
 
-export default class Login extends Component {
-    render() {
-        return (
+//    // https://api.intra.42.fr/oauth/
+
+
+
+export default function Login({ setToken }) {
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState();
+
+    return (
             <div >
                 <form class="d-grid gap-2">
 
@@ -21,5 +28,8 @@ export default class Login extends Component {
                 </form>
             </div>
         );
+
+    Login.propTypes = {
+        setToken: PropTypes.func.isRequired
     }
 }
