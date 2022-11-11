@@ -92,3 +92,6 @@ async updateEmail(id: number, newEmail: string) {
 			return userListDtos;
 		}
 	}
+
+
+	
