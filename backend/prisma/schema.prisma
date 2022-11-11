@@ -1,18 +1,21 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+const dotenv = require('dotenv');
+dotenv.config('../')
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = process.env.DATABASE_URL
 }
 
 model User {
 	id			Int			@id @default(autoincrement())
-  id42    Int
+  	id42    	Int
 	createdAt	DateTime	@default(now())
 	updatedAt	DateTime	@updatedAt
 	email		String		@unique
@@ -22,3 +25,4 @@ model User {
 	hashedRtoken	String?
 	twoFAsecret		String?
 	twoFA			Boolean?	@default(false)
+}

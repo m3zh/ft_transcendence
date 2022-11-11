@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
+//import { get42Url } from 'backend/src/user/42oauth.controller.ts';
+
 
 //    // https://api.intra.42.fr/oauth/
 
@@ -14,7 +16,7 @@ async function loginUser(credentials) {
       .then(data => data.json())
     }
 
-export default function Login({ setToken }) {
+function Login({ setToken }) {
     const [username, setUserName] = useState();
 
     const handleSubmit = async e => {
@@ -41,6 +43,9 @@ export default function Login({ setToken }) {
         );
     }
 
-    Login.propTypes = {
-        setToken: PropTypes.func.isRequired
-    }
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
+}
+
+
+export default Login
