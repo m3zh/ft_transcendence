@@ -1,6 +1,9 @@
 const router = require('express').Router()
 import { User, Prisma } from '@prisma/client';
-const Joi = require('@hapi/joi')
+const dotenv = require('dotenv');
+dotenv.config('../')
+const   Joi = require('@hapi/joi');
+const   jwt = require('jsonwebtoken');
 
 const schema = {
     name: Joi.string().min(6).required(),
@@ -23,6 +26,13 @@ router.post('/sign_in', async (req, res) => {
     } catch (error) {
         res.status(404).send(error);
     }
+});
+
+router.post('/log_in', async (req, res) => {
+
+    const token = jwt.sign({id: user.id}, process.env.SECRET_TOKEN);
+    res.header('auth-token', token).send(token);
+
 });
 
 
