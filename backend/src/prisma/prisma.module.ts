@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Global, Module } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 
@@ -10,5 +11,13 @@ import { PrismaService } from './prisma.service';
 @Module({
 	providers: [PrismaService],
 	exports: [PrismaService], //needed so the modules accessing the PrismaModule have access to the PrismaService
+=======
+import { Module } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
+
+@Module({
+  providers: [PrismaService],
+  exports: [PrismaService],
+>>>>>>> master
 })
 export class PrismaModule {}
