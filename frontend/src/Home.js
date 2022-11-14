@@ -5,14 +5,14 @@ import Login from './Login.js'
 function Home() {
     const { token, setToken } = useToken();
 
-    if (!token) {
+    if (token != {}) {
         return <Login setToken={setToken} />
     }
-    console.log(token);
+
     return (
         <>
             <div className="">
-                "HEY"
+                "HEY YOU THERE!!!"
             </div>
         </>
     )

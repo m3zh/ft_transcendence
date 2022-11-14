@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 async function loginUser( ) {
   try
   {
-    const res = await fetch('https://api.intra.42.fr/oauth/', {
+    const res = await fetch('https://api.intra.42.fr/oauth/v2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
