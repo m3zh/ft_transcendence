@@ -5,25 +5,28 @@ import PropTypes from 'prop-types';
 
 //    // https://api.intra.42.fr/oauth/
 
-async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
+async function loginUser( ) {
+  try
+  {
+    const res = await fetch('https://api.intra.42.fr/oauth/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-    }
+      body: JSON.stringify( )
+    }).then()
+  } catch(err) {
+    console.log(err);
+  }
+}
+    
 
 function Login({ setToken }) {
-    const [username, setUserName] = useState();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const token = await loginUser({
-          username
-        });
+        const token = await loginUser({});
+        console.log(token);
         setToken(token);
     }
 
@@ -31,13 +34,8 @@ function Login({ setToken }) {
             <div >
                 <form className="d-grid gap-2" onSubmit={handleSubmit}>
 
-                    <h3> 42transcendence </h3>
-
-                    <div className="form-group">
-                        <label>Login</label>
-                        <input type="email" className="form-control" placeholder="Enter your 42 login" onChange={e => setUserName(e.target.value)}/>
-                    </div>
-                    <button type="button" className="btn btn-dark btn-lg btn-block">Log in</button>
+                    <h1 className="font-weight-bold"> 42transcendence </h1>
+                      <button type="submit" className="btn btn-dark btn-lg btn-block">Log in with 42</button>
                 </form>
             </div>
         );
