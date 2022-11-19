@@ -2,7 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-42';
 import { Injectable } from '@nestjs/common';
 
-@Injectable
+@Injectable()
 export class Strategy42 extends PassportStrategy(Strategy) {
     constructor() {
             super({
