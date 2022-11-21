@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Users {
-  uid          Int      @id @default(autoincrement())
-  username       String   @unique
+  uid           Int      @id @default(autoincrement())
+  username      String   @unique
   hash          String?
   avatar        String
   intratoken    String?
