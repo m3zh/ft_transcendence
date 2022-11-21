@@ -13,15 +13,11 @@ export class AuthService {
 
     async validateUser(data: UserData){
         console.log('AuthService');
-        console.log(data);
+        console.log(data.uid);
         const user = await this.prisma.users.findFirst({
             where:
                 { uid: data.uid }
         })
-        // const user = await UsersService.findOne({
-        //     where:
-        //         { uid: data.uid }
-        // })
         if (user) return user;
 
     }

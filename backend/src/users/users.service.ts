@@ -14,7 +14,7 @@ export class UsersService {
     return this.prisma.users.findMany();
   }
 
-  findOne(uid: number) {
+  async findOne(uid: number) {
     return this.prisma.users.findUnique({where: {uid}})
   }
 

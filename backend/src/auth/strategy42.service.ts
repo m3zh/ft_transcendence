@@ -19,6 +19,6 @@ export class Strategy42 extends PassportStrategy(Strategy) {
     async validate(accessToken: string, refreshToken: string ) {
         console.log(accessToken);
         console.log(refreshToken);
-        const user = await this.authService.validateUser( { email: , displayName:  } )
+        // const user = await this.authService.validateUser( { email: , displayName:  } )
     }
 }
