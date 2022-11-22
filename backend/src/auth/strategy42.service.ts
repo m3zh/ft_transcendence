@@ -11,7 +11,7 @@ export class Strategy42 extends PassportStrategy(Strategy) {
             super({
                 clientID: process.env.CLIENT_ID,
                 clientSecret: process.env.CLIENT_SECRET,
-                callbackURL: 'http://localhost:3001/home',
+                callbackURL: 'http://localhost:3000/home',
                 scope: ['public'],
             });
         }
