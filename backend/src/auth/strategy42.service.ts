@@ -16,9 +16,10 @@ export class Strategy42 extends PassportStrategy(Strategy) {
             });
         }
 
-    async validate(accessToken: string, refreshToken: string ) {
+    async validate(accessToken, refreshToken, user ): Promise<any> {
         console.log(accessToken);
         console.log(refreshToken);
-        // const user = await this.authService.validateUser( { email: , displayName:  } )
+        const logged_user = await this.authService.validateUser( user )
+        return logged_user || null;    // either return user data or nothing
     }
 }

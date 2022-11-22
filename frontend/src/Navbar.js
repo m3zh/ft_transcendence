@@ -1,11 +1,11 @@
 import React from 'react';
-import useToken from './Auth.js'
+//import useToken from './Auth.js'
+import { Auth } from './api/auth.ts'
 
 function Navbar() {
 
-    const { token, setToken } = useToken();
-
-    if (token === {}) {
+    const data = false;
+    if (data) {
         return (
             <>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
