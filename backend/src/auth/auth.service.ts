@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+//import { User } from 'src/users/entities/user.entity';
 import { UserData } from 'src/prisma/types';
 import { UsersService } from '../users/users.service'
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -13,8 +14,8 @@ export class AuthService {
 
     async validateUser(data: UserData){
         console.log('AuthService');
-        console.log(data.uid);
-        const user = await this.usersService.findOne(data.uid)
+        console.log(data[id]);
+        const user = await this.usersService.findOne(data.id)
         if (user) return user;
         console.log('New User created')
         const newUser = this.usersService.create( new CreateUserDto );

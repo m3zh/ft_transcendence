@@ -10,7 +10,7 @@ export class Auth42Guard extends AuthGuard('42') {
         const activate = (await super.canActivate(context)) as boolean;
         const request = context.switchToHttp().getRequest();                // here we switch to HTTP protocol
         await super.logIn(request);
+        console.log(activate);
         return activate;
     }
-
 }
