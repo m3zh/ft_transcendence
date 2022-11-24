@@ -2,7 +2,7 @@
 import { UserData } from 'src/prisma/types';
 import { UsersService } from '../users/users.service'
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -14,10 +14,12 @@ export class AuthService {
 
     async validateUser(data: UserData){
         console.log('AuthService');
+        console.log(data);
         const user = await this.usersService.findOne(parseInt(data["id"]));
         if (user) return user;
-        console.log('New User created')
+        console.log('Creating new user...');
         const newUser = this.usersService.create( new CreateUserDto );
+        console.log('New User created');
         return newUser;
     }
 
