@@ -15,7 +15,7 @@ model Users {
   username      String   @unique
   hash          String?
   avatar        String?  
-  intra_id    Int?
+  intra_id    Int?      @unique
   dblauth       Boolean  @default(false)
   mail          String?  @unique
   friends       String[]
