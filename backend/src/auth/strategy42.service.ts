@@ -21,6 +21,8 @@ export class Strategy42 extends PassportStrategy(Strategy) {
         console.log("tokens:");
         console.log(accessToken);
         console.log(refreshToken);
+        console.log("Users data");
+        console.log(user);
         const logged_user = await this.authService.validateUser( user )
         return logged_user || null;    // either return user data or nothing
     }
