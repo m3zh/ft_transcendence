@@ -18,7 +18,10 @@ export class AuthService {
         const user = await this.usersService.findOne(parseInt(data["id"]));
         if (user) return user;
         console.log('Creating new user...');
-        const newUser = this.usersService.create( new CreateUserDto );
+        const new_user = new CreateUserDto;
+        new_user["username"] = data["username"];
+        new_user["avatar"] = data["_json"]["image"]["link"];
+        const newUser = this.usersService.create( new_user );
         console.log('New User created');
         return newUser;
     }
