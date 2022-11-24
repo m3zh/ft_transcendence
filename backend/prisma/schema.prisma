@@ -22,3 +22,11 @@ model Users {
   blacklist     String[]
   groups        String[]
 }
+
+model Profils {
+    uid     Int @unique @default(autoincrement())
+    image_url   String @unique
+    hash        String?
+    type        String?
+    information String      @id @default(uuid())
+}

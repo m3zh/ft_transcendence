@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ProfilsModule } from './profils/profils.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule, 
     AuthModule, 
     ConfigModule.forRoot(),
-    PassportModule.register({ session: true }), // this enables session for passport
+    PassportModule.register({ session: true }),
+    ProfilsModule, // this enables session for passport
   ],  
   controllers: [AppController],
   providers: [AppService],
