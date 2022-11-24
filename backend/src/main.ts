@@ -16,7 +16,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  app.enableCors();       // connect Cors with Express
+    app.enableCors({
+    //    allowedHeaders: '*',
+      //  origin: '*'
+    });// connect Cors with Express
   app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
