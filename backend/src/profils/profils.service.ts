@@ -1,8 +1,15 @@
-import {FileTypeValidator, Injectable, MaxFileSizeValidator, ParseFilePipe, UploadedFile} from '@nestjs/common';
-import { CreateProfilDto } from './dto/create-profil.dto';
+import { 
+  FileTypeValidator,
+  Injectable,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  UploadedFile
+} from '@nestjs/common';
+//import { CreateProfilDto } from './dto/create-profil.dto';
 import { UpdateProfilDto } from './dto/update-profil.dto';
 import { PrismaService } from "../prisma/prisma.service";
-import {randomInt, randomUUID} from "crypto";
+import { randomInt, randomUUID } from "crypto";
+
 @Injectable()
 export class ProfilsService {
   constructor(private prisma: PrismaService) {

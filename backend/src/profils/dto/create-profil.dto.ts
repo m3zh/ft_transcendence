@@ -1,9 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import {IsAscii, IsInt, IsUrl} from "class-validator";
 
-
-
-
 export class CreateProfilDto {
     @IsInt()
     @ApiProperty()
