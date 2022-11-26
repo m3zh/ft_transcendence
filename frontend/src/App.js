@@ -6,9 +6,9 @@ import {
 } from 'react-router-dom'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
-import Home from './Home.js'
-import Navbar from './Navbar.js'
-import NotFound from './NotFound.js'
+import Home from './Home.jsx'
+import Navbar from './Navbar.jsx'
+import NotFound from './NotFound.jsx'
 
 function App() {
 

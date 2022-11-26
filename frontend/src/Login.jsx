@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Auth } from './api/auth.ts'
+//import { Strategy42 } from 'backend/src/auth/strategy42.service'
 //import { UsersDto } from './api/dto/users.dto'
 
 
@@ -22,23 +23,23 @@ import { Auth } from './api/auth.ts'
 // }
     
 
-function Login() {
-    const [data, setData] = useState([]);
+function Login({ token, setToken }) {
 
     const handleSubmit = async e => {
         e.preventDefault();
         console.log("Login");
-        const data = await Auth.logIn();
-        console.log(data);
-        setData(data);
+        
+        const token = fetch("http://localhost:3001/auth");
+        console.log(token);
+        setToken(token);
+        return token;
     }
 
-    return (
+        return (
             <div >
-              <form className="d-grid gap-2" onSubmit={handleSubmit}>
-
+                <form className="d-grid gap-2" onSubmit={handleSubmit}>
                     <h1 className="font-weight-bold"> 42transcendence </h1>
-                      <button type="submit" className="btn btn-dark btn-lg btn-block">Log in with 42</button>
+                    <button type="submit" className="btn btn-dark btn-lg btn-block">Log in with 42</button>
                 </form>
             </div>
         );

@@ -1,13 +1,13 @@
-import React from 'react';
+import { React, useState } from 'react';
 //import useToken from './Auth.js'
-import Login from './Login.js'
+import Login from './Login.jsx'
 
 function Home() {
-    //const { token, setToken } = useToken();
+    const { token, setToken } = useState(0);
 
     console.log("Home");
-    // console.log(token);
-    if (2 % 2 === 0) {
+    console.log(token);
+    if (token === undefined) {
         return <Login />
     }
 
