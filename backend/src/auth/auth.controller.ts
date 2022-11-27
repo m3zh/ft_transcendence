@@ -1,5 +1,13 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { Auth42Guard } from './guards'
+import {
+    Controller,
+    Get,
+    UseGuards,
+    Req,
+    Res,
+    Inject
+} from '@nestjs/common';
+import { Auth42Guard } from './guards';
+import { Response } from 'express';
 
 @Controller() // this is default get url for this controller
 export class AuthController {
@@ -15,11 +23,9 @@ export class AuthController {
         };
     }
 
-    @Get('home') // this has to match the route ( no need to write localhost:3001 ) redirection of the 42 api settings
+    @Get('redirect') // this has to match the route ( no need to write localhost:3001 ) redirection of the 42 api settings
     @UseGuards(Auth42Guard)
-    handleRedirection(){
-        return {
-            msg: 'OK' 
-        };
+    handleRedirection(@Res() res: Response) {
+        res.redirect("http://localhost:3000/home");
     }
 }
