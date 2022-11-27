@@ -4,13 +4,13 @@ import './style/Profile.css'
 function Profile() {
         return (
             <>
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-12">
                             <div id="content" className="content content-full-width">
                             <div className="profile">
                                 <div className="profile-header">
-                                    <div className="profile-header-cover"></div>
+
                                     <div className="profile-header-content">
                                     <div className="profile-header-img">
                                         <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""/>

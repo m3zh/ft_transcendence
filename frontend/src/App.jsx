@@ -17,14 +17,14 @@ function App() {
         <Router >
           <ThemeProvider>
           <Navbar />
-          <div className="App d-flex align-items-center justify-content-center">
+          
           <Switch>
             <Route exact path="/">
               <Home />
             </Route>
             <Route component={NotFound}/>
           </Switch>
-          </div>
+
           </ThemeProvider>
         </Router>
   );
