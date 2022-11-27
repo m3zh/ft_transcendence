@@ -3,12 +3,12 @@ import { React, useState } from 'react';
 import Login from './Login.jsx'
 
 function Home() {
-    const { token, setToken } = useState(0);
+    const [ token, setToken ] = useState([]);
 
     console.log("Home");
     console.log(token);
-    if (token === undefined) {
-        return <Login />
+    if (token.length === 0) {
+        return <Login token={ token } setToken={ setToken } />
     }
 
     return (
