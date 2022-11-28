@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import { Auth } from './api/auth.ts';
 import { routes } from './api/routes.ts'
 
 function Login() {

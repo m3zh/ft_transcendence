@@ -7,7 +7,6 @@ import {
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.jsx'
-import Navbar from './Navbar.jsx'
 import NotFound from './NotFound.jsx'
 import { ThemeProvider } from './contexts';
 
@@ -15,9 +14,7 @@ function App() {
 
   return (
         <Router >
-          <ThemeProvider>
-          <Navbar />
-          
+          <ThemeProvider>         
           <Switch>
             <Route exact path="/">
               <Home />

@@ -26,6 +26,6 @@ export class AuthController {
     @Get('redirect') // this has to match the route ( no need to write localhost:3001 ) redirection of the 42 api settings
     @UseGuards(Auth42Guard)
     handleRedirection(@Res() res: Response) {
-        res.redirect("http://localhost:3000/home");
+        res.redirect("http://localhost:3000/");
     }
 }
