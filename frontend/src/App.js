@@ -9,6 +9,7 @@ import './index.css'
 import Home from './Home.js'
 import Navbar from './Navbar.js'
 import NotFound from './NotFound.js'
+import Pong from './pong/Pong.js'
 
 function App() {
 
@@ -21,6 +22,9 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
+              <Route exact path="/pong">
+                  <Pong />
+              </Route>
             <Route component={NotFound}/>
           </Switch>
           </div>
