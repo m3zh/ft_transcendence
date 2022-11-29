@@ -7,7 +7,9 @@ const CANVAS_WIDTH = 1080;
 const CANVAS_HEIGHT = 600;
 const PAD_WIDTH = 15;
 const PAD_HEIGHT = 100;
-const BALL_SIZE = PAD_WIDTH;
+const PAD_SPEED = 15;
+const BALL_SPEED = 2;
+const BALL_RAD = 10;
 
 function Pong() {
 
@@ -16,6 +18,12 @@ function Pong() {
     const [speed, setSpeed] = useState(null);
     const [scoreP1, setScoreP1] = useState(0);
     const [scoreP2, setScoreP2] = useState(0);
+    const [P1PadX, setP1PadX] = useState(0);
+    const [P1PadY, setP1PadY] = useState(0);
+    const [P2PadX, setP2PadX] = useState(0);
+    const [P2PadY, setP2PadY] = useState(0);
+    const [ballX, setBallX] = useState(0);
+    const [ballY, setBallY] = useState(0);
     const [winner, setWinner] = useState('');
     const [dir, setDir] = useState([0, -1]);
     const canvasRef = useRef();
@@ -34,38 +42,76 @@ function Pong() {
         context.fillRect((canvasRef.current.width / 2) - (PAD_WIDTH / 2),0,
             PAD_WIDTH, canvasRef.current.height);
         // starting pad P1
-        context.fillRect(0,(canvasRef.current.height / 2) - (PAD_HEIGHT / 2),
-            PAD_WIDTH, PAD_HEIGHT);
+        context.fillRect(P1PadX, P1PadY, PAD_WIDTH, PAD_HEIGHT);
         // starting pad P2
-        context.fillRect(canvasRef.current.width, (canvasRef.current.height / 2) - (PAD_HEIGHT / 2),
-            - PAD_WIDTH, PAD_HEIGHT);
+        context.fillRect(P2PadX, P2PadY, - PAD_WIDTH, PAD_HEIGHT);
         // starting ball
-        context.fillRect(PAD_WIDTH,(canvasRef.current.height / 2) - (BALL_SIZE / 2),
-            BALL_SIZE, BALL_SIZE);
+       /* context.fillRect(PAD_WIDTH,(canvasRef.current.height / 2) - (BALL_SIZE / 2),
+            BALL_SIZE, BALL_SIZE);*/
+        context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
+        context.fill();
+    }
+
+    function movePadUp(player) {
+        if (player === "P1" && P1PadY > 0) {
+            setP1PadY(P1PadY - PAD_SPEED);
+        } else if (player === "P2" && P2PadY > 0) {
+            setP2PadY(P2PadY - PAD_SPEED);
+        }
+    }
+
+    function movePadDown(player) {
+        if (player === "P1" && (P1PadY + PAD_HEIGHT) < canvasRef.current.height) {
+            setP1PadY(P1PadY + PAD_SPEED);
+        } else if (player === "P2" && (P2PadY + PAD_HEIGHT) < canvasRef.current.height) {
+            setP2PadY(P2PadY + PAD_SPEED);
+        }
     }
 
     function moveBall() {
-
+        setBallX(ballX + BALL_SPEED);
     }
 
+    /* ajouter un nouveau param player une fois les sockets implémentés */
     function processKeyPress(key) {
-        if (gameRunning && !ballLaunched && key.keyCode === 32 /* space */ ) {
+        if (!gameRunning) {
+            return ;
+        } else if (!ballLaunched && key.keyCode === 32 /* space */ ) {
             setBallLaunched(true);
             moveBall();
+        }
+        if (key.keyCode === 38 /* up */) {
+            movePadUp("P2");
+        }
+        if (key.keyCode === 40 /* down */) {
+            movePadDown("P2");
+        }
+        if (key.keyCode === 90 /* 'z' */) {
+            movePadUp("P1");
+        }
+        if (key.keyCode === 83 /* 's' */) {
+            movePadDown("P1");
         }
     }
 
     function gameLoop() {
         if (gameRunning) {
-
+            if (ballLaunched) {
+                moveBall();
+            }
         }
     }
 
     function startGame() {
         if (!gameRunning) {
-            console.log("Start Game !");
             setGameRunning(true);
-            setSpeed(1000);
+            setP1PadX(0);
+            setP1PadY((canvasRef.current.height / 2) - (PAD_HEIGHT / 2));
+            setP2PadX(canvasRef.current.width);
+            setP2PadY((canvasRef.current.height / 2) - (PAD_HEIGHT / 2));
+            setBallX(PAD_WIDTH);
+            setBallY((canvasRef.current.height / 2) - (BALL_RAD / 2));
+            setSpeed(0.001);
         }
     }
 
@@ -74,17 +120,21 @@ function Pong() {
             setSpeed(null);
             setWinner('');
             setGameRunning(false);
+            setBallLaunched(false);
         }
     }
 
     useEffect(() => {
         const context = canvasRef.current.getContext("2d");
         context.fillStyle = "black";
-        context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         if (gameRunning) {
+            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+            context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
             drawElements(context);
+        } else {
+            context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
-    }, [scoreP1, scoreP2, winner, gameRunning, ballLaunched]);
+    }, [scoreP1, scoreP2, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, drawElements]);
 
     useInterval(() => gameLoop(), speed);
 
