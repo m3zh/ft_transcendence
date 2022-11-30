@@ -15,7 +15,6 @@ function Pong() {
 
     const [gameRunning, setGameRunning] = useState(false);
     const [ballLaunched, setBallLaunched] = useState(false);
-    const [speed, setSpeed] = useState(null);
     const [scoreP1, setScoreP1] = useState(0);
     const [scoreP2, setScoreP2] = useState(0);
     const [P1PadX, setP1PadX] = useState(0);
@@ -24,8 +23,10 @@ function Pong() {
     const [P2PadY, setP2PadY] = useState(0);
     const [ballX, setBallX] = useState(0);
     const [ballY, setBallY] = useState(0);
+    const [dirX, setDirX] = useState(0);
+    const [dirY, setDirY] = useState(0);
     const [winner, setWinner] = useState('');
-    const [dir, setDir] = useState([0, -1]);
+    const [speed, setSpeed] = useState(null);
     const canvasRef = useRef();
 
     function drawButton() {
@@ -34,6 +35,22 @@ function Pong() {
         if (!gameRunning)
             return (start);
         return (stop);
+    }
+
+    function initElements(ballPos) {
+        setP1PadX(0);
+        setP1PadY((canvasRef.current.height / 2) - (PAD_HEIGHT / 2));
+        setP2PadX(canvasRef.current.width);
+        setP2PadY((canvasRef.current.height / 2) - (PAD_HEIGHT / 2));
+        setDirX(0);
+        setDirY(0);
+        if (ballPos === "P1") {
+            setBallX(PAD_WIDTH);
+            setBallY((canvasRef.current.height / 2) - (BALL_RAD / 2));
+        } else {
+            setBallX(canvasRef.current.width - PAD_WIDTH - BALL_RAD);
+            setBallY((canvasRef.current.height / 2) - (BALL_RAD / 2));
+        }
     }
 
     function drawElements(context) {
@@ -46,10 +63,9 @@ function Pong() {
         // starting pad P2
         context.fillRect(P2PadX, P2PadY, - PAD_WIDTH, PAD_HEIGHT);
         // starting ball
-       /* context.fillRect(PAD_WIDTH,(canvasRef.current.height / 2) - (BALL_SIZE / 2),
-            BALL_SIZE, BALL_SIZE);*/
-        context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
-        context.fill();
+       context.fillRect(ballX, ballY, BALL_RAD, BALL_RAD);
+        // context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
+        // context.fill();
     }
 
     function movePadUp(player) {
@@ -68,8 +84,48 @@ function Pong() {
         }
     }
 
+    function scoreAndResetBall(player) {
+        setBallLaunched(false);
+        if (player === "P1") {
+            setScoreP1(scoreP1 + 1);
+            initElements("P2");
+        } else {
+            setScoreP2(scoreP2 + 1);
+            initElements("P1");
+        }
+    }
+
+    function collisions() {
+        if ((ballY - BALL_RAD) >= P1PadY && (ballY + BALL_RAD) <= (P1PadY + PAD_HEIGHT)
+            && (ballX - BALL_RAD) <= P1PadX) {
+            setDirX(1);
+            if (ballY < (P1PadY + PAD_HEIGHT / 2)) {
+                setDirY(0.5); // randomize this value ?
+            } else if (ballY > (P1PadY + PAD_HEIGHT / 2)) {
+                setDirY(- 0.5);
+            }
+        } else if ((ballY + BALL_RAD) >= P2PadY && (ballY + BALL_RAD) <= (P2PadY + PAD_HEIGHT)
+            && (ballX + BALL_RAD) >= P2PadX - PAD_WIDTH) {
+            setDirX(-1);
+            if (ballY < (P2PadY + PAD_HEIGHT / 2)) {
+                setDirY(0.5);
+            } else if (ballY > (P2PadY + PAD_HEIGHT / 2)) {
+                setDirY(-0.5);
+            }
+        } else if (ballY <= 0) {
+            setDirY(0.5);
+        } else if (ballY >= canvasRef.current.height) {
+            setDirY(- 0.5);
+        } else if (ballX <= - BALL_RAD) {
+            scoreAndResetBall("P2");
+        } else if (ballX >= canvasRef.current.width) {
+            scoreAndResetBall("P1");
+        }
+    }
+
     function moveBall() {
-        setBallX(ballX + BALL_SPEED);
+        setBallX(ballX + BALL_SPEED * dirX);
+        setBallY(ballY + BALL_SPEED * dirY);
     }
 
     /* ajouter un nouveau param player une fois les sockets implémentés */
@@ -78,7 +134,11 @@ function Pong() {
             return ;
         } else if (!ballLaunched && key.keyCode === 32 /* space */ ) {
             setBallLaunched(true);
-            moveBall();
+            if (ballX === PAD_WIDTH) {
+                setDirX(1);
+            } else {
+                setDirX(- 1);
+            }
         }
         if (key.keyCode === 38 /* up */) {
             movePadUp("P2");
@@ -95,29 +155,26 @@ function Pong() {
     }
 
     function gameLoop() {
-        if (gameRunning) {
-            if (ballLaunched) {
-                moveBall();
-            }
+        if (gameRunning && ballLaunched) {
+            collisions();
+            moveBall();
         }
     }
 
     function startGame() {
         if (!gameRunning) {
             setGameRunning(true);
-            setP1PadX(0);
-            setP1PadY((canvasRef.current.height / 2) - (PAD_HEIGHT / 2));
-            setP2PadX(canvasRef.current.width);
-            setP2PadY((canvasRef.current.height / 2) - (PAD_HEIGHT / 2));
-            setBallX(PAD_WIDTH);
-            setBallY((canvasRef.current.height / 2) - (BALL_RAD / 2));
-            setSpeed(0.001);
+            initElements("P1");
+            setScoreP1(0);
+            setScoreP2(0);
+            setWinner('');
+            setSpeed(1 / 60); // 1 / 60 = deltatime
         }
     }
 
     function stopGame() {
         if (gameRunning) {
-            setSpeed(null);
+            setSpeed(0);
             setWinner('');
             setGameRunning(false);
             setBallLaunched(false);
@@ -134,7 +191,7 @@ function Pong() {
         } else {
             context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
-    }, [scoreP1, scoreP2, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, drawElements]);
+    }, [scoreP1, scoreP2, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, dirX, dirY, drawElements]);
 
     useInterval(() => gameLoop(), speed);
 
