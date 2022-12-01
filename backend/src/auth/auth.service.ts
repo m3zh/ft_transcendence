@@ -15,8 +15,10 @@ export class AuthService {
     async validateUser(data: UserData){
         console.log('AuthService');
         console.log(data);
-        const user = await this.usersService.findOne(parseInt(data["id"]));
-        if (user) return user;
+        const tempo = data["id"]
+        console.log(tempo);
+        const user =  await this.usersService.findOne(+tempo);
+        if (user) {console.log(user); console.log("----------"); return user} ;
         console.log('Creating new user...');
 
         const new_user = new CreateUserDto;

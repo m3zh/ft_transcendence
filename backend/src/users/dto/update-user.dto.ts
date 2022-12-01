@@ -10,7 +10,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @ApiProperty()
     avatar: string;
     @ApiProperty()
-    intratoken: string;
+    intra_id: number;
     @ApiProperty()
     dblauth: boolean = false;
     @ApiProperty()
