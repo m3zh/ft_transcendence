@@ -11,8 +11,8 @@ const PAD_SPEED = 15;
 const BALL_SPEED = 2;
 const BALL_RAD = 10;
 
-function Pong() {
-
+function Pong()
+{
     const [gameRunning, setGameRunning] = useState(false);
     const [ballLaunched, setBallLaunched] = useState(false);
     const [scoreP1, setScoreP1] = useState(0);
@@ -25,22 +25,12 @@ function Pong() {
     const [ballY, setBallY] = useState(0);
     const [dirX, setDirX] = useState(0);
     const [dirY, setDirY] = useState(0);
+    const [lastScorer, setLastScorer] = useState('');
     const [winner, setWinner] = useState('');
     const [speed, setSpeed] = useState(0);
     const canvasRef = useRef();
 
-    function drawButton() {
-        const start = <button onClick={startGame}>Start Game</button>;
-        const stop = <button onClick={stopGame}>Stop</button>;
-        if (!gameRunning)
-            return (start);
-        return (stop);
-    }
-
-    // setBallY(P1PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
-    //
-    // setBallY(P2PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
-
+                                    /* INIT FUNCTIONS */
 
     function initElements(ballPos) {
         setP1PadX(0);
@@ -58,7 +48,35 @@ function Pong() {
         }
     }
 
+    /* MAIN INIT FUNCTION
+    *   simply starts the game and places the elements
+    * */
+    function startGame() {
+        if (!gameRunning) {
+            setGameRunning(true);
+            initElements("P1");
+            setScoreP1(0);
+            setScoreP2(0);
+            setWinner('');
+            setSpeed(1 / 60);
+        }
+    }
+
+    function stopGame() {
+        if (gameRunning) {
+            setSpeed(0);
+            setWinner('');
+            setGameRunning(false);
+            setBallLaunched(false);
+        }
+    }
+
+                                        /* DRAWING FUNCTIONS */
+
     function drawElements(context) {
+        // clear && fill black screen
+        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+        context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         // mid-line
         context.fillStyle = "white";
         context.fillRect((canvasRef.current.width / 2) - (PAD_WIDTH / 2),0,
@@ -68,10 +86,36 @@ function Pong() {
         // pad P2
         context.fillRect(P2PadX, P2PadY, - PAD_WIDTH, PAD_HEIGHT);
         // ball
-       context.fillRect(ballX, ballY, BALL_RAD, BALL_RAD);
+        context.fillRect(ballX, ballY, BALL_RAD, BALL_RAD);
         // context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
         // context.fill();
     }
+
+    function drawButton() {
+        const start = <button onClick={startGame}>Start Game</button>;
+        const stop = <button onClick={stopGame}>Stop</button>;
+        if (!gameRunning)
+            return (start);
+        return (stop);
+    }
+
+    /* MAIN DRAW FUNCTION
+    *   creates the canvas context that will be used in other functions
+    *   to get information about the state of the canvas
+    *   it is intended to print elements (black screen, white lines,
+    *   paddles, ball, scores ...) on the screen
+    *   it uses the useEffect JS hook and is updated once one of its
+    *   dependency in the array at the end of the function is modified
+    * */
+    useEffect(() => {
+        const context = canvasRef.current.getContext("2d");
+        context.fillStyle = "black";
+        if (gameRunning) {
+            drawElements(context);
+        } else {
+            context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        }
+    }, [scoreP1, scoreP2, P1PadX, P2PadX, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, dirX, dirY]);
 
     function movePadUp(player) {
         if (player === "P1" && P1PadY > 0) {
@@ -81,22 +125,13 @@ function Pong() {
         }
     }
 
+                                     /* UPDATING FUNCTIONS */
+
     function movePadDown(player) {
         if (player === "P1" && (P1PadY + PAD_HEIGHT) < canvasRef.current.height) {
             setP1PadY(P1PadY + PAD_SPEED);
         } else if (player === "P2" && (P2PadY + PAD_HEIGHT) < canvasRef.current.height) {
             setP2PadY(P2PadY + PAD_SPEED);
-        }
-    }
-
-    function scoreAndResetBall(player) {
-        setBallLaunched(false);
-        if (player === "P1") {
-            setScoreP1(scoreP1 + 1);
-            initElements("P2");
-        } else {
-            setScoreP2(scoreP2 + 1);
-            initElements("P1");
         }
     }
 
@@ -121,10 +156,34 @@ function Pong() {
             setDirY(0.5);
         } else if (ballY >= canvasRef.current.height) {
             setDirY(- 0.5);
-        } else if (ballX < - BALL_RAD) {
+        }
+    }
+
+    function scoreAndResetBall(player) {
+        setBallLaunched(false);
+        if (player === "P1") {
+            setLastScorer("P1");
+            setScoreP1(scoreP1 + 1);
+            initElements("P2");
+        } else {
+            setLastScorer("P2");
+            setScoreP2(scoreP2 + 1);
+            initElements("P1");
+        }
+    }
+    function checkWin() {
+        if (ballX < - BALL_RAD) {
             scoreAndResetBall("P2");
         } else if (ballX > canvasRef.current.width) {
             scoreAndResetBall("P1");
+        }
+    }
+
+    function stickBall() {
+        if (lastScorer === "P1") {
+            setBallY(P2PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
+        } else if (lastScorer === "P2") {
+            setBallY(P1PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
         }
     }
 
@@ -159,47 +218,24 @@ function Pong() {
         }
     }
 
+    /* MAIN UPDATE FUNCTION
+    *   1/60 times by second (which is known as delta-time in video game development
+    *   and is the tiniest frame rendering fraction of time)
+    *   the game will be updated with a useEffect JS Hook a bit modified called useInterval
+    *   (to allow delta-time update, rather than array of dependencies)
+    *   it is intended to update the game state, and so animate game elements
+    *   frame by frame, make them interact, keep an eye on scores etc...
+    *   => GAMEPLAY ANIMATION
+    * */
     function gameLoop() {
         if (gameRunning && ballLaunched) {
             moveBall();
             collisions();
+            checkWin();
         } else if (gameRunning && !ballLaunched) {
-            setBallY(P1PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
-            setBallY(P2PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
+            stickBall();
         }
     }
-
-    function startGame() {
-        if (!gameRunning) {
-            setGameRunning(true);
-            initElements("P1");
-            setScoreP1(0);
-            setScoreP2(0);
-            setWinner('');
-            setSpeed(1 / 60); // 1 / 60 = deltatime
-        }
-    }
-
-    function stopGame() {
-        if (gameRunning) {
-            setSpeed(0);
-            setWinner('');
-            setGameRunning(false);
-            setBallLaunched(false);
-        }
-    }
-
-    useEffect(() => {
-        const context = canvasRef.current.getContext("2d");
-        context.fillStyle = "black";
-        if (gameRunning) {
-            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-            context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-            drawElements(context);
-        } else {
-            context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        }
-    }, [scoreP1, scoreP2, P1PadX, P2PadX, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, dirX, dirY]);
 
     useInterval(() => gameLoop(), speed);
 
