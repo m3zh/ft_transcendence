@@ -26,7 +26,7 @@ function Pong() {
     const [dirX, setDirX] = useState(0);
     const [dirY, setDirY] = useState(0);
     const [winner, setWinner] = useState('');
-    const [speed, setSpeed] = useState(null);
+    const [speed, setSpeed] = useState(0);
     const canvasRef = useRef();
 
     function drawButton() {
@@ -36,6 +36,11 @@ function Pong() {
             return (start);
         return (stop);
     }
+
+    // setBallY(P1PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
+    //
+    // setBallY(P2PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
+
 
     function initElements(ballPos) {
         setP1PadX(0);
@@ -58,11 +63,11 @@ function Pong() {
         context.fillStyle = "white";
         context.fillRect((canvasRef.current.width / 2) - (PAD_WIDTH / 2),0,
             PAD_WIDTH, canvasRef.current.height);
-        // starting pad P1
+        // pad P1
         context.fillRect(P1PadX, P1PadY, PAD_WIDTH, PAD_HEIGHT);
-        // starting pad P2
+        // pad P2
         context.fillRect(P2PadX, P2PadY, - PAD_WIDTH, PAD_HEIGHT);
-        // starting ball
+        // ball
        context.fillRect(ballX, ballY, BALL_RAD, BALL_RAD);
         // context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
         // context.fill();
@@ -116,9 +121,9 @@ function Pong() {
             setDirY(0.5);
         } else if (ballY >= canvasRef.current.height) {
             setDirY(- 0.5);
-        } else if (ballX <= - BALL_RAD) {
+        } else if (ballX < - BALL_RAD) {
             scoreAndResetBall("P2");
-        } else if (ballX >= canvasRef.current.width) {
+        } else if (ballX > canvasRef.current.width) {
             scoreAndResetBall("P1");
         }
     }
@@ -133,12 +138,12 @@ function Pong() {
         if (!gameRunning) {
             return ;
         } else if (!ballLaunched && key.keyCode === 32 /* space */ ) {
-            setBallLaunched(true);
-            if (ballX === PAD_WIDTH) {
+            if (ballX < canvasRef.current.width / 2) {
                 setDirX(1);
             } else {
                 setDirX(- 1);
             }
+            setBallLaunched(true);
         }
         if (key.keyCode === 38 /* up */) {
             movePadUp("P2");
@@ -156,8 +161,11 @@ function Pong() {
 
     function gameLoop() {
         if (gameRunning && ballLaunched) {
-            collisions();
             moveBall();
+            collisions();
+        } else if (gameRunning && !ballLaunched) {
+            setBallY(P1PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
+            setBallY(P2PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
         }
     }
 
@@ -191,7 +199,7 @@ function Pong() {
         } else {
             context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
-    }, [scoreP1, scoreP2, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, dirX, dirY, drawElements]);
+    }, [scoreP1, scoreP2, P1PadX, P2PadX, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, dirX, dirY]);
 
     useInterval(() => gameLoop(), speed);
 
