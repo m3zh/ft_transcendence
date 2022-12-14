@@ -8,7 +8,7 @@ export class CreateUserDto {
     @ApiProperty()
     avatar: string;
     @ApiProperty()
-    intratoken: string;
+    intra_id: number;
     @ApiProperty()
     dblauth: boolean = false;
     @ApiProperty()

@@ -4,13 +4,15 @@ export class Auth {
     public static async logIn(): Promise<UsersDto[]> {
         console.log("auth");
         const res = await fetch("http://localhost:3001/auth", {
-            method: "GET",
-            headers: {
+        method: "GET",
+        mode: 'no-cors',
+                headers: {
                 'Access-Control-Allow-Origin': '*',
             }
-        })
+        }
+            )
 
-        const  data = await res.json();
+        const  data = await  res.text();
         console.log(data);
         return data;
     }
