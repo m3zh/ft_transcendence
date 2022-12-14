@@ -73,24 +73,6 @@ function Pong()
 
                                         /* DRAWING FUNCTIONS */
 
-    function drawElements(context) {
-        // clear && fill black screen
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-        context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        // mid-line
-        context.fillStyle = "white";
-        context.fillRect((canvasRef.current.width / 2) - (PAD_WIDTH / 2),0,
-            PAD_WIDTH, canvasRef.current.height);
-        // pad P1
-        context.fillRect(P1PadX, P1PadY, PAD_WIDTH, PAD_HEIGHT);
-        // pad P2
-        context.fillRect(P2PadX, P2PadY, - PAD_WIDTH, PAD_HEIGHT);
-        // ball
-        context.fillRect(ballX, ballY, BALL_RAD, BALL_RAD);
-        // context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
-        // context.fill();
-    }
-
     function drawButton() {
         const start = <button onClick={startGame}>Start Game</button>;
         const stop = <button onClick={stopGame}>Stop</button>;
@@ -111,11 +93,25 @@ function Pong()
         const context = canvasRef.current.getContext("2d");
         context.fillStyle = "black";
         if (gameRunning) {
-            drawElements(context);
+            // clear && fill black screen
+            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+            context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+            // mid-line
+            context.fillStyle = "white";
+            context.fillRect((canvasRef.current.width / 2) - (PAD_WIDTH / 2),0,
+                PAD_WIDTH, canvasRef.current.height);
+            // pad P1
+            context.fillRect(P1PadX, P1PadY, PAD_WIDTH, PAD_HEIGHT);
+            // pad P2
+            context.fillRect(P2PadX, P2PadY, - PAD_WIDTH, PAD_HEIGHT);
+            // ball
+            context.fillRect(ballX, ballY, BALL_RAD, BALL_RAD);
+            // context.arc(ballX, ballY, BALL_RAD, 0, 2 * Math.PI, false);
+            // context.fill();
         } else {
             context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
-    }, [scoreP1, scoreP2, P1PadX, P2PadX, P1PadY, P2PadY, ballX, ballY, winner, gameRunning, ballLaunched, dirX, dirY]);
+    }, [P1PadX, P2PadX, P1PadY, P2PadY, ballX, ballY, gameRunning]);
 
     function movePadUp(player) {
         if (player === "P1" && P1PadY > 0) {
@@ -182,7 +178,7 @@ function Pong()
     function stickBall() {
         if (lastScorer === "P1") {
             setBallY(P2PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
-        } else if (lastScorer === "P2") {
+        } else if (lastScorer === "P2" || lastScorer === '') {
             setBallY(P1PadY + (PAD_HEIGHT / 2) - (BALL_RAD / 2));
         }
     }
