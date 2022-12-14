@@ -1,10 +1,20 @@
+import React from 'react';
+//import useToken from './Auth.js'
 import Login from './Login.js'
 
 function Home() {
+    //const { token, setToken } = useToken();
+
+    console.log("Home");
+    // console.log(token);
+    if (2 % 2 === 0) {
+        return <Login />
+    }
+
     return (
         <>
-            <div className="d-flex align-items-center justify-content-center">
-                <Login></Login>
+            <div className="">
+                "HEY YOU THERE!!!"
             </div>
         </>
     )

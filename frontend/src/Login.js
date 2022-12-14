@@ -1,34 +1,52 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import PropTypes from 'prop-types';
+import { Auth } from './api/auth.ts'
+//import { UsersDto } from './api/dto/users.dto'
 
-export default class Login extends Component {
-    render() {
-        return (
-            <form>
 
-                <h3>Log in</h3>
+//    // https://api.intra.42.fr/oauth/
 
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
+// async function loginUser( ) {
+//   try
+//   {
+//     await fetch('https://api.intra.42.fr/oauth/v2', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify( )
+//     }).then()
+//   } catch(err) {
+//     console.log(err);
+//   }
+// }
+    
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
+function Login() {
+    const [data, setData] = useState([]);
 
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-                    </div>
-                </div>
+    const handleSubmit = async e => {
+        e.preventDefault();
+        console.log("Login");
+        const data = await Auth.logIn();
+        console.log(data);
+        setData(data);
+    }
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
-                <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p>
-            </form>
+    return (
+            <div >
+              <form className="d-grid gap-2" onSubmit={handleSubmit}>
+
+                    <h1 className="font-weight-bold"> 42transcendence </h1>
+                      <button type="submit" className="btn btn-dark btn-lg btn-block">Log in with 42</button>
+                </form>
+            </div>
         );
     }
-}
+
+// Login.propTypes = {
+//     setToken: PropTypes.func.isRequired
+// }
+
+
+export default Login
