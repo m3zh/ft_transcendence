@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("LOC_DATABASE_URL")
 }
 
 model Users {
@@ -21,6 +21,13 @@ model Users {
   friends       String[]
   blacklist     String[]
   groups        String[]
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
 }
 
 model Profils {

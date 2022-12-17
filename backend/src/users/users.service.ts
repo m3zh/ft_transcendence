@@ -17,8 +17,7 @@ export class UsersService {
   async findOne(uid: number) {
     const content = await this.prisma.users.findUnique({where: {intra_id : uid}})
     if(!content) {
-        throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
-        console.log("user not found")
+        //throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     }
     return content
   }
