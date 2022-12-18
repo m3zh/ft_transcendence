@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "express-session": "^1.17.3",
     "http-proxy-middleware": "^2.0.6",
+    "js-cookie": "^3.0.1",
     "npm": "^8.19.2",
     "passport-42": "^1.2.6",
     "react": "^18.2.0",

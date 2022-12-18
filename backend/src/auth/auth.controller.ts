@@ -6,8 +6,8 @@ import {
     Res,
     Inject
 } from '@nestjs/common';
-import { Auth42Guard } from './guards';
-import { Response } from 'express';
+import { Auth42Guard } from './auth.guards';
+import { Response, Request } from 'express';
 
 @Controller() // this is default get url for this controller
 export class AuthController {

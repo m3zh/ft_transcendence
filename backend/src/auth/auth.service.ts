@@ -2,23 +2,23 @@
 import { UserData } from 'src/prisma/types';
 import { UsersService } from '../users/users.service'
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
 
     constructor(
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
+        private jwtService: JwtService
     ) {}
 
 
     async validateUser(data: UserData){
         console.log('AuthService');
-        console.log(data);
         const tempo = data["id"]
-        console.log(tempo);
         const user =  await this.usersService.findOne(+tempo);
-        if (user) {console.log(user); console.log("----------"); return user} ;
+        if (user) {console.log("User in db"); console.log("----------"); return user} ;
         console.log('Creating new user...');
 
         const new_user = new CreateUserDto;
@@ -33,5 +33,12 @@ export class AuthService {
     async findUser(intratoken: number){
         const user = await this.usersService.findOne( intratoken );
         return user;
+    }
+
+    async login(user: any) {
+        const payload = { username: user.username, sub: user.uid };
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
     }
 }

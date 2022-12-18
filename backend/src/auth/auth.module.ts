@@ -5,9 +5,20 @@ import { AuthService } from './auth.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { UsersService } from 'src/users/users.service';
 import { SessionSerializer } from './serializer';
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { jwtConstants } from "./constant";
+import {JwtStrategy} from "./jwt.strategy";
 
 @Module({
-  imports: [ PrismaModule ],
+  imports: [
+      PrismaModule,
+      PassportModule.register({ session: true }),
+      JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
   providers: [
     Strategy42,
     SessionSerializer,
@@ -15,7 +26,8 @@ import { SessionSerializer } from './serializer';
       provide: 'AUTH_SERVICE',
       useClass: AuthService,
     },
-    UsersService
+    UsersService,
+    JwtStrategy,
   ],
   controllers: [AuthController]
 })

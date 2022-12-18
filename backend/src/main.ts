@@ -8,7 +8,6 @@ import { PrismaClient } from '@prisma/client';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-
     const config = new DocumentBuilder()
       .setTitle('Transcendance api')
       .setDescription('Api for transcendance')

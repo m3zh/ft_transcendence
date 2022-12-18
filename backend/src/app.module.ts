@@ -8,6 +8,9 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProfilsModule } from './profils/profils.module';
 import { AuthnModule } from './authn/authn.module';
+import {AuthService} from "./auth/auth.service";
+import {jwtConstants} from "./auth/constant";
+import {JwtService} from "@nestjs/jwt";
 
 
 @Module({
@@ -16,12 +19,12 @@ import { AuthnModule } from './authn/authn.module';
     UsersModule, 
     AuthModule, 
     ConfigModule.forRoot(),
-    PassportModule.register({ session: true }),
+    PassportModule.register({ session: true }), // this enables session for passport
     ProfilsModule,
     AuthnModule,
-    // this enables session for passport
+
   ],  
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService, JwtService],
 })
 export class AppModule {}
