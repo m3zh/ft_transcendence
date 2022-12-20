@@ -1,17 +1,24 @@
 import { useState, createContext } from 'react';
 
-export const ThemeContext = createContext()
+export const AuthContext = createContext({
+    token: '',
+    user: {}
+});
 
-export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState('light')
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light')
-    }
- 
+export const AuthProvider = ({ children }) => {
+    const [token, setToken] = useState('');
+    const [user, setUser] = useState({});
+
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            {children}
-        </ThemeContext.Provider>
-    )
+        <AuthContext.Provider
+            value={{
+                token: token,
+                user: user,
+                setToken: setToken,
+                setUser: setUser,
+            }}
+        >
+            { children }
+        </AuthContext.Provider>
+    );
 }
-

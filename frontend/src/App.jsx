@@ -8,25 +8,24 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.jsx'
 import NotFound from './NotFound.jsx'
-import { ThemeProvider } from './contexts';
 import Pong from './pong/Pong.js'
+import {AuthProvider} from "./contexts/index.jsx";
 
 function App() {
 
   return (
         <Router >
-          <ThemeProvider>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-              <Route exact path="/pong">
-                  <Pong />
-              </Route>
-            <Route component={NotFound}/>
-          </Switch>
-
-          </ThemeProvider>
+            <AuthProvider>
+                <Switch>
+                    <Route exact path="/">
+                      <Home />
+                    </Route>
+                      <Route exact path="/pong">
+                          <Pong />
+                      </Route>
+                    <Route component={NotFound}/>
+                </Switch>
+            </AuthProvider>
         </Router>
   );
 }

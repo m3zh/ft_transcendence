@@ -1,5 +1,4 @@
 import React from "react";
-import Card from './Card.jsx';
 import './style/Profile.css'
 
 function Profile({ user }) {
@@ -25,7 +24,6 @@ function Profile({ user }) {
                     </div>            
                 </div>
                 <div className="row">
-                    <Card/>
                 </div>
             </div>
             </>
