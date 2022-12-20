@@ -7,11 +7,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProfilsModule } from './profils/profils.module';
-import { AuthnModule } from './authn/authn.module';
-import {AuthService} from "./auth/auth.service";
-import {jwtConstants} from "./auth/constant";
-import {JwtService} from "@nestjs/jwt";
-
+import { AuthService } from "./auth/auth.service";
+import { JwtService } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -21,9 +18,7 @@ import {JwtService} from "@nestjs/jwt";
     ConfigModule.forRoot(),
     PassportModule.register({ session: true }), // this enables session for passport
     ProfilsModule,
-    AuthnModule,
-
-  ],  
+  ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],
 })

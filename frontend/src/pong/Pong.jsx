@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import useInterval from './useInterval.js';
 import Timer from './Timer.js';
 import './pong.css'
-import {AuthContext} from "../contexts/index.jsx";
+import {AuthContext} from "../contexts/index";
 
 const CANVAS_WIDTH = 1080;
 const CANVAS_HEIGHT = 600;
@@ -30,8 +30,8 @@ function Pong()
     const [winner, setWinner] = useState('');
     const [speed, setSpeed] = useState(0);
     const canvasRef = useRef();
-    const cxt = useContext(AuthContext);
-    console.log(cxt.token);
+    const { token } = useContext(AuthContext);
+    console.log(token);
                                     /* INIT FUNCTIONS */
 
     function initElements(ballPos) {
@@ -236,6 +236,7 @@ function Pong()
     }
 
     useInterval(() => gameLoop(), speed);
+
 
     return (
         <>

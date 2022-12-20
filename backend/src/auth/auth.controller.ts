@@ -37,6 +37,7 @@ export class AuthController {
         @Res() res: Response )
         {
             const user = req.user;
+            console.log("redirect");
             console.log(user);
             const jwtToken = this.jwtService.sign({
                 id: user["uid"],

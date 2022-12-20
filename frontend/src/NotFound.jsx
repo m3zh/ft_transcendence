@@ -1,6 +1,10 @@
-import React  from 'react';
+import React, {useContext} from 'react';
+import {AuthContext} from "./contexts/index.jsx";
 
 function NotFound() {
+    const { token } = useContext(AuthContext);
+    console.log(token);
+
     return (
         <>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>

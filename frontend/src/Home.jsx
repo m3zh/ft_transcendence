@@ -6,15 +6,15 @@ import {AuthContext} from "./contexts/index.jsx";
 
 function Home() {
     const cxt = useContext(AuthContext);
-    console.log(cxt.token)
+    console.log("HOME: " + cxt.token)
     if ( !cxt.token ) {
         return <Login />
     }
 
     return (
         <>
-            <Profile/>
             <Navbar/>
+            <Profile/>
         </>
     )
 }
