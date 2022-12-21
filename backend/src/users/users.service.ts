@@ -19,6 +19,7 @@ export class UsersService {
     if(!content) {
         //throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     }
+    console.log()
     return content
   }
 
