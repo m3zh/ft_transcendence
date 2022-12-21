@@ -3,8 +3,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
-
+import { JwtAuthGuard } from '../auth/jwt.authguard';
 import { AuthGuard } from '@nestjs/passport';
+import {REQUEST} from "@nestjs/core";
 
 @Controller('users')
 export class UsersController {
@@ -19,9 +20,9 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-
+ @UseGuards(JwtAuthGuard)
   @Get(':uid')
-  async  findOne(@Param('uid') id: string) {
+  async  findOne(@Param('uid') id: string, @Request() req) {
     return this.usersService.findOne(+id);
   }
 
@@ -52,12 +53,6 @@ export class UsersController {
   deleteblocked(@Param('blocked') blocked: string)
   {
     return this.usersService.deleteblocked(blocked);
-  }
-
-  @UseGuards(AuthGuard('local'))
-  @Post('auth/login')
-  async login(@Request() req) {
-    return
   }
 
 }

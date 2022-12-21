@@ -43,6 +43,7 @@ export class AuthController {
                 id: user["uid"],
                 login42: user["intra_id"],
             });
+            console.log(jwtToken)
             res.cookie('jwt_token', jwtToken, { sameSite: 'none', secure: true });
             res.redirect("http://localhost:3000/");
         }
