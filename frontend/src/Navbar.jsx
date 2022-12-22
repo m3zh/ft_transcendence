@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
 function Navbar() {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,7 +16,7 @@ function Navbar() {
                                 <a className="nav-link active" aria-current="page" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href={navigate}>Play</a>
+                                <a className="nav-link" href="/pong">Play</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/chat">Chat</a>

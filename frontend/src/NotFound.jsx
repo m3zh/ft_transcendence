@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {AuthContext} from "./contexts/index.jsx";
+import {AuthContext} from "./providers/index.jsx";
 
 function NotFound() {
     const ctx = useContext(AuthContext);

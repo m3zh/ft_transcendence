@@ -10,7 +10,7 @@ import Home from './Home.jsx'
 import Login from "./Login.jsx";
 import NotFound from './NotFound.jsx'
 import Pong from './pong/Pong.jsx'
-import {AuthProvider} from "./contexts/index.jsx";
+import {AuthProvider} from "./providers/index.jsx";
 import Navbar from "./Navbar.jsx";
 
 function App() {

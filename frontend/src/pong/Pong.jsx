@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import useInterval from './useInterval.js';
 import Timer from './Timer.js';
 import './pong.css'
-import {AuthContext} from "../contexts/index";
+import {AuthContext} from "../providers/index";
 
 const CANVAS_WIDTH = 1080;
 const CANVAS_HEIGHT = 600;

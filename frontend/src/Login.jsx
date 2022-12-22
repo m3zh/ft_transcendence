@@ -1,38 +1,36 @@
 import { useContext, useEffect, useCallback, useState } from "react";
-import { AuthContext } from "./contexts/index.jsx";
+import { AuthContext } from "./providers/index.jsx";
 import { routes } from './api/routes.ts'
 import jsCookie from "js-cookie";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 function Login() {
-    const { token, setToken } = useContext(AuthContext);
+    const { token, setToken, user, setUser } = useContext(AuthContext);
+    const jwt = useSelector((state) => state.counter.value)
+    const dispatch = useDispatch()
 
     const onHandleSubmit = useCallback((event) => {
         event.preventDefault();
         window.location.href = routes.login42;
-        setToken(jsCookie.get('jwt_token'));
-        return token;
     }, []);
 
     useEffect(() => {
-        if (jsCookie) {
+        if (jsCookie.get('jwt_token')) {
             setToken(jsCookie.get('jwt_token'));
-            /*
-            axios(
-                {
-                    "url": "",
-                    "method": "GET",
-                    "Authorization": "Bearer " + token,
-                }
-            ).then(
-
-            )
-            console.log(jsCookie.get('jwt_token'));
             const decoded = jwtDecode(jsCookie.get('jwt_token'));
+            if (!user.login42) {
+                axios({
+                        url: "http://localhost:3001/users/" + decoded.login42,
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+                        }
+                }).then(res => {
 
-            console.log(decoded);
-             */
+                    //setUser(res);
+                }).catch(err => console.error(err))
+            }
         }
     }, [onHandleSubmit]);
 
@@ -50,40 +48,6 @@ function Login() {
     );
 }
 
- /*
-function Login() {
-    const cxt = useContext(AuthContext);
-    console.log(cxt);
-    const initialState = {
-       token: '',
-    };
-    const [user, setUser] = useState(initialState);
-
-    const onHandleSubmit = useCallback((event) => {
-        event.preventDefault();
-        window.location.href = routes.login42;
-    }, []);
-
-    useEffect(() => {
-        if (jsCookie) {
-            cxt.setToken(jsCookie.get('jwt_token'));
-        }
-        //const user = await ;
-    }, [onHandleSubmit, cxt]);
-
-    return (
-        <div className="App d-flex align-items-center justify-content-center">
-            <div className="d-grid gap-2" >
-                <h1 className="font-weight-bold"> 42transcendence </h1>
-                <button onClick={(event) => onHandleSubmit(event) }
-                        type="submit"
-                        className="btn btn-dark btn-lg btn-block">
-                    Log in with 42
-                </button>
-            </div>
-        </div>
-    );
-}*/
 // () => arrow function gets evaluated when clicking on the button
 // {} function gets evaluated as soon as the page is rendered
 
