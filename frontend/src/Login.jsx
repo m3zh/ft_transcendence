@@ -1,14 +1,14 @@
-import { useContext, useEffect, useCallback, useState } from "react";
-import { AuthContext } from "./providers/index.jsx";
+import { useEffect, useCallback } from "react";
 import { routes } from './api/routes.ts'
 import jsCookie from "js-cookie";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken,setCurrentUser } from "./providers/userProvider.js";
 
 function Login() {
-    const { token, setToken, user, setUser } = useContext(AuthContext);
-    const jwt = useSelector((state) => state.counter.value)
-    const dispatch = useDispatch()
+    const user = useSelector((state) => state.userProvider.user);
+    const dispatch = useDispatch();
 
     const onHandleSubmit = useCallback((event) => {
         event.preventDefault();
@@ -17,7 +17,8 @@ function Login() {
 
     useEffect(() => {
         if (jsCookie.get('jwt_token')) {
-            setToken(jsCookie.get('jwt_token'));
+            dispatch(setToken(jsCookie.get('jwt_token')));
+            }
             const decoded = jwtDecode(jsCookie.get('jwt_token'));
             if (!user.login42) {
                 axios({
@@ -27,11 +28,9 @@ function Login() {
                             Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
                         }
                 }).then(res => {
-
-                    //setUser(res);
+                    dispatch(setCurrentUser(res.data));
                 }).catch(err => console.error(err))
             }
-        }
     }, [onHandleSubmit]);
 
     return (

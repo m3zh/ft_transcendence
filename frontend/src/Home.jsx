@@ -1,14 +1,13 @@
-import { useContext } from 'react';
 import Login from './Login.jsx'
 import Profile from './Profile.jsx'
-import { AuthContext } from "./providers/index.jsx";
+import { useSelector } from "react-redux";
 
 function Home() {
-    const ctx = useContext(AuthContext);
+    const jwt = useSelector((state) => state.userProvider.token);
 
     return (
         <>
-            { ctx.token ?
+            { jwt.length ?
                 <Profile/>
                 :
                 <Login />
@@ -17,4 +16,4 @@ function Home() {
     )
 }
 
-export default Home
+export default Home;
