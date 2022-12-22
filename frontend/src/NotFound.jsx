@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import {AuthContext} from "./contexts/index.jsx";
 
 function NotFound() {
-    const { token } = useContext(AuthContext);
-    console.log(token);
+    const ctx = useContext(AuthContext);
+    console.log(ctx);
 
     return (
         <>

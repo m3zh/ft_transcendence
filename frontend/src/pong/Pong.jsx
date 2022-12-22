@@ -30,8 +30,8 @@ function Pong()
     const [winner, setWinner] = useState('');
     const [speed, setSpeed] = useState(0);
     const canvasRef = useRef();
-    const { token } = useContext(AuthContext);
-    console.log(token);
+    const ctx = useContext(AuthContext);
+    console.log(ctx.token);
                                     /* INIT FUNCTIONS */
 
     function initElements(ballPos) {

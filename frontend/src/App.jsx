@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Routes
 } from 'react-router-dom'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
@@ -11,20 +11,23 @@ import Login from "./Login.jsx";
 import NotFound from './NotFound.jsx'
 import Pong from './pong/Pong.jsx'
 import {AuthProvider} from "./contexts/index.jsx";
+import Navbar from "./Navbar.jsx";
 
 function App() {
 
-  return (
+    return (
         <Router >
             <AuthProvider>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/pong" component={Pong} />
+                <Navbar />
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/pong" element={<Pong />} />
                     <Route component={NotFound}/>
-                </Switch>
+                </Routes>
             </AuthProvider>
         </Router>
-  );
+    );
 }
 
-export default App
+export default App;

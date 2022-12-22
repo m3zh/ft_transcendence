@@ -2,6 +2,8 @@ import { useContext, useEffect, useCallback, useState } from "react";
 import { AuthContext } from "./contexts/index.jsx";
 import { routes } from './api/routes.ts'
 import jsCookie from "js-cookie";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 function Login() {
     const { token, setToken } = useContext(AuthContext);
@@ -16,6 +18,21 @@ function Login() {
     useEffect(() => {
         if (jsCookie) {
             setToken(jsCookie.get('jwt_token'));
+            /*
+            axios(
+                {
+                    "url": "",
+                    "method": "GET",
+                    "Authorization": "Bearer " + token,
+                }
+            ).then(
+
+            )
+            console.log(jsCookie.get('jwt_token'));
+            const decoded = jwtDecode(jsCookie.get('jwt_token'));
+
+            console.log(decoded);
+             */
         }
     }, [onHandleSubmit]);
 

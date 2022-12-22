@@ -41,9 +41,8 @@ export class AuthController {
             console.log(user);
             const jwtToken = this.jwtService.sign({
                 id: user["uid"],
-                login42: user["intra_id"],
-            });
-            console.log(jwtToken)
+                login42: user["intra_id"] },
+            );
             res.cookie('jwt_token', jwtToken, { sameSite: 'none', secure: true });
             res.redirect("http://localhost:3000/");
         }
