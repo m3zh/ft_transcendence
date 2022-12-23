@@ -18,7 +18,6 @@ function Login() {
     useEffect(() => {
         if (jsCookie.get('jwt_token')) {
             dispatch(setToken(jsCookie.get('jwt_token')));
-            }
             const decoded = jwtDecode(jsCookie.get('jwt_token'));
             if (!user.login42) {
                 axios({
@@ -31,6 +30,7 @@ function Login() {
                     dispatch(setCurrentUser(res.data));
                 }).catch(err => console.error(err))
             }
+        }
     }, [onHandleSubmit]);
 
     return (
