@@ -32,9 +32,8 @@ async function bootstrap() {
     });
     app.use(
         session({
-            name: 'SESSION_ID',
             cookie: {
-                maxAge: 60000,
+                secure: true,
             },
             secret: 'cocochoc',
             resave: false,

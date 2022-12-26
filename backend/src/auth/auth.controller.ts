@@ -44,4 +44,12 @@ export class AuthController {
             console.log("jwt token")
             res.redirect("http://localhost:3000/");
         }
+
+    @Get('logout')
+    logout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+        res.cookie('access_token', '', {
+            httpOnly: false,
+        });
+        res.status(302).redirect(`http://localhost:3000/`);
+    }
 }
