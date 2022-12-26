@@ -1,7 +1,23 @@
-import {useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import { routes } from "./api/routes.ts";
+import {useCallback, useEffect} from "react";
+import {setCurrentUser, setToken} from "./providers/userProvider.js";
 
 function Navbar() {
-    //const navigate = useNavigate();
+    const loggedIn = useSelector((state) => state.userProvider.token);
+    const dispatch = useDispatch();
+    console.log(loggedIn)
+
+    const onHandleClick = useCallback((event) => {
+        event.preventDefault();
+        window.location.href = routes.logout;
+    }, []);
+
+    useEffect(() => {
+            dispatch(setToken(''));
+            dispatch(setCurrentUser(''));
+    }, [onHandleClick]);
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,6 +42,16 @@ function Navbar() {
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                             <button className="btn btn-outline-grey" type="submit">Search</button>
                         </form>
+                        {
+                            loggedIn.length ?
+                                <ul className="navbar-nav mb-2 mb-lg-0">
+                                    <li className="nav-item">
+                                        <a className="nav-link" onClick={ (event) => onHandleClick(event) }>Log Out</a>
+                                    </li>
+                                </ul>
+                                :
+                                <></>
+                        }
                     </div>
                 </div>
             </nav>

@@ -19,7 +19,7 @@ export class AuthController {
         @Inject('AUTH_SERVICE') private readonly authService: AuthService,
     ) {};
 
-    @Get('auth')  // this is a decorator, it states where the user will be redirected
+    @Get('login')  // this is a decorator, it states where the user will be redirected
             // to authenticate
             // do NOT add ; at the end of the line
             // do NOT add / before the beginning of the path, eg. NO '/auth'
@@ -47,7 +47,7 @@ export class AuthController {
 
     @Get('logout')
     logout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
-        res.cookie('access_token', '', {
+        res.cookie('jwt_token', '', {
             httpOnly: false,
         });
         res.status(302).redirect(`http://localhost:3000/`);

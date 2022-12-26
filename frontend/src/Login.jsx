@@ -12,7 +12,7 @@ function Login() {
 
     const onHandleSubmit = useCallback((event) => {
         event.preventDefault();
-        window.location.href = routes.login42;
+        window.location.href = routes.login;
     }, []);
 
     useEffect(() => {
