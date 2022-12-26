@@ -11,11 +11,12 @@ import { Response, Request } from 'express';
 import { User } from 'src/users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { ExecutionContext } from "@nestjs/common";
+import {AuthService} from "./auth.service";
 
 @Controller() // this is default get url for this controller
 export class AuthController {
     constructor(
-        private jwtService: JwtService,
+        @Inject('AUTH_SERVICE') private readonly authService: AuthService,
     ) {};
 
     @Get('auth')  // this is a decorator, it states where the user will be redirected
@@ -31,19 +32,16 @@ export class AuthController {
 
     @Get('redirect') // this has to match the route ( no need to write localhost:3001 ) redirection of the 42 api settings
     @UseGuards(Auth42Guard)
-    handleRedirection(
-        ctx: ExecutionContext,
+    async handleRedirection(
         @Req() req: Request,
-        @Res() res: Response )
+        @Res({ passthrough: true }) res: Response )
         {
             const user = req.user;
             console.log("redirect");
-            console.log(user);
-            const jwtToken = this.jwtService.sign({
-                id: user["uid"],
-                login42: user["intra_id"] },
-            );
-            res.cookie('jwt_token', jwtToken, { sameSite: 'none', secure: true });
+            console.log(JSON.stringify(user));
+            const jwt = await this.authService.login(user);
+            res.cookie('jwt_token', jwt.access_token, { sameSite: 'none', secure: true });
+            console.log("jwt token")
             res.redirect("http://localhost:3000/");
         }
 }

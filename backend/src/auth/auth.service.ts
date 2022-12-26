@@ -36,7 +36,8 @@ export class AuthService {
     }
 
     async login(user: any) {
-        const payload = { username: user.username, sub: user.uid };
+        const payload = { id: user.uid, login42: user.intra_id };
+        console.log("ici " + payload)
         return {
             access_token: this.jwtService.sign(payload),
         };
