@@ -24,11 +24,7 @@ export class AuthController {
             // do NOT add ; at the end of the line
             // do NOT add / before the beginning of the path, eg. NO '/auth'
     @UseGuards(Auth42Guard)
-    handleAuthentication(){
-        return {
-            msg: '42 authentication' 
-        };
-    }
+    handleAuthentication(){}
 
     @Get('redirect') // this has to match the route ( no need to write localhost:3001 ) redirection of the 42 api settings
     @UseGuards(Auth42Guard)
@@ -38,10 +34,8 @@ export class AuthController {
         {
             const user = req.user;
             console.log("redirect");
-            console.log(JSON.stringify(user));
             const jwt = await this.authService.login(user);
             res.cookie('jwt_token', jwt.access_token, { sameSite: 'none', secure: true });
-            console.log("jwt token")
             res.redirect("http://localhost:3000/");
         }
 

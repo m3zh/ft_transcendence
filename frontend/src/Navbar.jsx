@@ -1,12 +1,11 @@
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { routes } from "./api/routes.ts";
-import {useCallback, useEffect} from "react";
-import {setCurrentUser, setToken} from "./providers/userProvider.js";
+import { useCallback, useEffect } from "react";
+import { setCurrentUser, setToken } from "./providers/userProvider.js";
 
 function Navbar() {
     const loggedIn = useSelector((state) => state.userProvider.token);
     const dispatch = useDispatch();
-    console.log(loggedIn)
 
     const onHandleClick = useCallback((event) => {
         event.preventDefault();

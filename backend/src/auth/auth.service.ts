@@ -16,11 +16,11 @@ export class AuthService {
 
     async validateUser(data: UserData){
         console.log('AuthService');
-        const tempo = data["id"]
-        const user =  await this.usersService.findOne(+tempo);
-        if (user) {console.log("User in db"); console.log("----------"); return user} ;
-        console.log('Creating new user...');
-
+        const user =  await this.usersService.findOne(+data["id"]);
+        if (user) {
+            console.log("User in db");
+            return user;
+        }
         const new_user = new CreateUserDto;
         new_user["username"] = data["username"];
         new_user["avatar"] = data["_json"]["image"]["link"];
@@ -37,7 +37,6 @@ export class AuthService {
 
     async login(user: any) {
         const payload = { id: user.uid, login42: user.intra_id };
-        console.log("ici " + payload)
         return {
             access_token: this.jwtService.sign(payload),
         };

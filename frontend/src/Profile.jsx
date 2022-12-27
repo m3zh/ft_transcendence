@@ -1,5 +1,6 @@
 import './style/Profile.css'
 import { useSelector } from "react-redux";
+import Card from "./Card.jsx"
 
 function Profile() {
     const user = useSelector((state) => state.userProvider.user);
@@ -25,8 +26,9 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                </div>
+                {/* <!-- <div className="row">
+                    <Card title="Users Online"/>
+                </div> --> */}
             </div>
         </>
     );
