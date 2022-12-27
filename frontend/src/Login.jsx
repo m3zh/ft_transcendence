@@ -11,11 +11,13 @@ function Login() {
     const dispatch = useDispatch();
 
     const onHandleSubmit = useCallback((event) => {
+        console.log("submit")
         event.preventDefault();
         window.location.href = routes.login;
     }, []);
 
     useEffect(() => {
+        console.log("effect")
         if (jsCookie.get('jwt_token')) {
             dispatch(setToken(jsCookie.get('jwt_token')));
             const decoded = jwtDecode(jsCookie.get('jwt_token'));
@@ -38,7 +40,9 @@ function Login() {
         <div className="App d-flex align-items-center justify-content-center">
             <div className="d-grid gap-2" >
                 <h1 className="font-weight-bold"> 42transcendence </h1>
-                <button onClick={ (event) => onHandleSubmit(event) }
+                <button onClick={ (event) => {
+                    onHandleSubmit(event)
+                } }
                         type="submit"
                         className="btn btn-dark btn-lg btn-block">
                     Log in with 42
