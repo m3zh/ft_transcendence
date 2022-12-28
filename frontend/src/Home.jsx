@@ -10,7 +10,7 @@ function Home() {
     return (
         <>
             { jwt.length ?
-                    <Profile/>
+                <Profile/>
                 :
                 <Login />
             }

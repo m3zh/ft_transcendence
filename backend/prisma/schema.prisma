@@ -17,6 +17,7 @@ model Users {
   avatar        String?  
   intra_id      Int      @unique
   dblauth       Boolean  @default(false)
+  first_login   Boolean  @default(true)
   mail          String?  @unique
   friends       String[]
   blacklist     String[]

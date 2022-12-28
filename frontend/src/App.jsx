@@ -12,6 +12,7 @@ import NotFound from './NotFound.jsx'
 import Pong from './pong/Pong.jsx'
 import {AuthProvider} from "./providers/index.jsx";
 import Navbar from "./Navbar.jsx";
+import EditProfile from "./EditProfile";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/editProfile" element={<EditProfile />} />
                     <Route exact path="/pong" element={<Pong />} />
                     <Route component={NotFound}/>
                 </Routes>

@@ -11,17 +11,14 @@ function Login() {
     const dispatch = useDispatch();
 
     const onHandleSubmit = useCallback((event) => {
-        console.log("submit")
         event.preventDefault();
         window.location.href = routes.login;
     }, []);
 
     useEffect(() => {
-        console.log("effect")
         if (jsCookie.get('jwt_token')) {
             dispatch(setToken(jsCookie.get('jwt_token')));
             const decoded = jwtDecode(jsCookie.get('jwt_token'));
-            console.log(decoded)
             if (!user.login42) {
                 axios({
                         url: "http://localhost:3001/users/" + decoded.login42,
