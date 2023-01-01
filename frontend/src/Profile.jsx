@@ -4,6 +4,7 @@ import Card from "./Card.jsx"
 
 function Profile() {
     const user = useSelector((state) => state.userProvider.user);
+    console.log(user)
 
     return (
         <>

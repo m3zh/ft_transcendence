@@ -22,9 +22,8 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/editProfile" element={<EditProfile />} />
-                    <Route exact path="/pong" element={<Pong />} />
+                    <Route path="/editprofile" element={<EditProfile />} />
+                    <Route path="/pong" element={<Pong />} />
                     <Route component={NotFound}/>
                 </Routes>
             </AuthProvider>
