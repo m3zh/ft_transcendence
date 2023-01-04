@@ -40,9 +40,11 @@ function EditProfile() {
                                     </div>
                                     <div className="profile-header-info">
                                         <form>
-                                            <input className="m-t-10 m-b-5" onChange={ (e)=> setUsername(e.target.value) }/>
-                                            <input className="m-t-10 m-b-5" value="title" onChange={ (e)=> setTitle(e.target.value) }/>
-                                            <button type="submit" onClick={ (event) => onHandleUpdate(event) } className="btn btn-sm btn-warning mb-2">Update Profile</button>
+                                            <label>Change your username</label><br></br>
+                                            <input style={{ placeholderTextColor: "gray" }} className="m-t-10 m-b-5" placeholder={ user.username } onChange={ (e)=> setUsername(e.target.value) }/><br></br>
+                                            <label>Wanna add a personal note?</label><br></br>
+                                            <input className="m-t-10 m-b-5" placeholder="ex: the best player ever" onChange={ (e)=> setTitle(e.target.value) }/><br></br>
+                                            <button type="submit" onClick={ (event) => onHandleUpdate(event) } className="btn btn-sm btn-warning mt-2">Update Profile</button>
                                         </form> 
                                     </div>
                                 </div>
