@@ -1,4 +1,5 @@
 import './style/Profile.css'
+import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import Card from "./Card.jsx"
 
@@ -20,7 +21,7 @@ function Profile() {
                                     <div className="profile-header-info">
                                         <h4 className="m-t-10 m-b-5">{ user.username }</h4>
                                         <p className="m-b-10">{ user.subtitle }</p>
-                                        <a href="/editProfile" className="btn btn-sm btn-info mb-2">Edit Profile</a>
+                                        <Link to="/editProfile" className="btn btn-sm btn-info mb-2">Edit Profile</Link>
                                     </div>
                                 </div>
                             </div>

@@ -18,7 +18,6 @@ function App() {
 
     return (
         <Router >
-            <AuthProvider>
                 <Navbar />
                 <Routes>
                     <Route exact path="/" element={<Home />} />
@@ -26,7 +25,6 @@ function App() {
                     <Route path="/pong" element={<Pong />} />
                     <Route component={NotFound}/>
                 </Routes>
-            </AuthProvider>
         </Router>
     );
 }
