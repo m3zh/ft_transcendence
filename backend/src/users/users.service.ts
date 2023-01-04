@@ -20,14 +20,13 @@ export class UsersService {
     if(!content) {
         //throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     }
-    console.log()
     return content
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.prisma.users.update(
         {
-          where: {uid: id},
+          where: {intra_id: id},
           data: updateUserDto
         }
     )

@@ -12,17 +12,21 @@ function EditProfile() {
 
     function onHandleUpdate(event) {
         event.preventDefault();
-        console.log(user.login42)
-        console.log(user)
+        console.log("username")
+        console.log(username)
+        const data = { "username" : { username }}
         axios({
             url: "http://localhost:3001/users/" + user.intra_id,
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
             },
-            body: username
+            data: { username }
         }).then(res => {
-            console.log(res)
+            console.log("resrersrers")
+            console.log(res.data)
+            sessionStorage.setItem('user', JSON.stringify(res.data))
+            window.location = "http://localhost:3000/";
         }).catch(err => console.error(err))
     }
 
