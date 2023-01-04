@@ -31,7 +31,7 @@ function Navbar() {
                                 <a className="nav-link active" aria-current="page" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/pong">Play</a>
+                                <a className="nav-link" href="/play">Play</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/chat">Chat</a>

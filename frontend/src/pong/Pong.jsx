@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import useInterval from './useInterval.js';
 import Timer from './Timer.js';
 import './pong.css'
@@ -244,7 +244,7 @@ function Pong()
                     <Timer gameRunning={gameRunning}/>
                     <h1 id="score">{scoreP1} {scoreP2}</h1>
                 </div>
-                <div className="canvas" role="button" tabIndex="0" onKeyDown={key => processKeyPress(key)}>
+                <div className="canvas text-center" role="button" tabIndex="0" onKeyDown={key => processKeyPress(key)}>
                     <canvas
                         className="border"
                         width={CANVAS_WIDTH}

@@ -22,6 +22,7 @@ model Users {
   friends       String[]
   blacklist     String[]
   groups        String[]
+  games         GameOnUsers[]
 }
 
 model Session {
@@ -37,4 +38,20 @@ model Profils {
     hash        String?
     type        String?
     information String      @id @default(uuid())
+}
+
+model Game {
+    uid         Int     @unique @default(autoincrement())
+    score       String
+    isActive    Boolean @default(false)
+    users       GameOnUsers[]
+}
+
+model GameOnUsers {
+    player      Users   @relation(fields: [playerId], references: [uid])
+    playerId    Int
+    game        Game    @relation(fields: [gameId], references: [uid])
+    gameId      Int
+
+    @@id([playerId, gameId])
 }

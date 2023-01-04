@@ -1,4 +1,3 @@
-import React, {useContext} from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,12 +6,11 @@ import {
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.jsx'
-import Login from "./Login.jsx";
 import NotFound from './NotFound.jsx'
-import Pong from './pong/Pong.jsx'
 import {AuthProvider} from "./providers/index.jsx";
 import Navbar from "./Navbar.jsx";
 import EditProfile from "./EditProfile";
+import GameMenu from "./pong/GameMenu.jsx";
 
 function App() {
 
@@ -23,7 +21,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/editprofile" element={<EditProfile />} />
-                    <Route path="/pong" element={<Pong />} />
+                    <Route path="/play" element={<GameMenu />} />
                     <Route component={NotFound}/>
                 </Routes>
             </AuthProvider>
