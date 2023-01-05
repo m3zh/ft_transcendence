@@ -41,17 +41,20 @@ model Profils {
 }
 
 model Game {
-    uid         Int     @unique @default(autoincrement())
-    score       String
-    isActive    Boolean @default(false)
+    id         Int             @unique @default(autoincrement())
+    createdAt   DateTime        @default(now())
+    isActive    Boolean         @default(false)
+    score1      Int
+    score2      Int
     users       GameOnUsers[]
 }
 
 model GameOnUsers {
     player      Users   @relation(fields: [playerId], references: [uid])
     playerId    Int
-    game        Game    @relation(fields: [gameId], references: [uid])
+    game        Game    @relation(fields: [gameId], references: [id])
     gameId      Int
 
     @@id([playerId, gameId])
 }
+

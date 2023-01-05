@@ -9,6 +9,9 @@ import { ConfigModule } from '@nestjs/config';
 import { ProfilsModule } from './profils/profils.module';
 import { AuthService } from "./auth/auth.service";
 import { JwtService } from "@nestjs/jwt";
+import { GamesController } from './games/games.controller';
+import { GamesModule } from './games/games.module';
+import {GamesService} from "./games/games.service";
 
 @Module({
   imports: [
@@ -17,9 +20,9 @@ import { JwtService } from "@nestjs/jwt";
     AuthModule, 
     ConfigModule.forRoot(),
     PassportModule.register({ session: true }), // this enables session for passport
-    ProfilsModule,
+    ProfilsModule, GamesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, AuthService, JwtService],
+  controllers: [AppController, GamesController],
+  providers: [AppService, AuthService, JwtService, GamesService],
 })
 export class AppModule {}
