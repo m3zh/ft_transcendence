@@ -5,7 +5,6 @@ import Card from "./Card.jsx"
 
 function Profile() {
     const user = useSelector((state) => state.userProvider.user);
-    console.log(user)
 
     return (
         <>
@@ -28,9 +27,19 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-                {/* <!-- <div className="row">
-                    <Card title="Users Online"/>
-                </div> --> */}
+                <div class="container mt-5">
+                    <div class="row align-items-start">
+                        <div className="col">
+                            <Card title="Users Online"/>
+                        </div>
+                        <div className="col">
+                            <Card title="Friends"/>
+                        </div>
+                        <div className="col">
+                            <Card title="Ranking"/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     );

@@ -12,9 +12,6 @@ function EditProfile() {
 
     function onHandleUpdate(event) {
         event.preventDefault();
-        console.log("username")
-        console.log(username)
-        const data = { "username" : { username }}
         axios({
             url: "http://localhost:3001/users/" + user.intra_id,
             method: "PATCH",

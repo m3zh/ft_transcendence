@@ -17,6 +17,7 @@ import { JwtAuthGuard } from '../auth/jwt.authguard';
 import { AuthGuard } from '@nestjs/passport';
 import { REQUEST } from '@nestjs/core';
 import { CreateFrDto } from './dto/create-fr.dto';
+
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
