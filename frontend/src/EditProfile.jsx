@@ -3,12 +3,16 @@ import { useState, setState } from 'react';
 import { useSelector } from "react-redux";
 import jsCookie from "js-cookie"
 import axios from 'axios';
+import Avatar from 'react-avatar-edit'
 
 function EditProfile() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    console.log(user)
+    const user = useSelector((state) => state.userProvider.user);
+    const src = useSelector((state) => state.userProvider.user.avatar);
+    console.log(src)
+    const MAX_SIZE = 71680;
     let [username, setUsername] = useState("");
     let [title, setTitle] = useState("");
+    let [preview, setPreview] = useState(null);
 
     function onHandleUpdate(event) {
         event.preventDefault();
@@ -26,6 +30,16 @@ function EditProfile() {
             window.location = "http://localhost:3000/";
         }).catch(err => console.error(err))
     }
+
+      
+    function onClose()          {    setPreview(null);       }
+    function onCrop(preview)    {    setPreview({preview});  }
+    function onBeforeFileLoad(elem) {
+        if (elem.target.files[0].size > MAX_SIZE) {
+          alert("File size too big!");
+          elem.target.value = "";
+        };
+      }
 
     return (
         <>

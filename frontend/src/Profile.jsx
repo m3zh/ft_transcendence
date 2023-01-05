@@ -27,8 +27,8 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-                <div class="container mt-5">
-                    <div class="row align-items-start">
+                <div className="container mt-5">
+                    <div className="row align-items-start">
                         <div className="col">
                             <Card title="Users Online"/>
                         </div>
