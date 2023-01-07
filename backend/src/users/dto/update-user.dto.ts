@@ -5,8 +5,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @ApiProperty()
     username: string;
-    // @ApiProperty()
-    // avatar: string;
+    @ApiProperty()
+    avatar: string;
     // @ApiProperty()
     // friends: string[];
     // @ApiProperty()

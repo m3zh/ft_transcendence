@@ -4,43 +4,60 @@ import { useSelector } from "react-redux";
 import jsCookie from "js-cookie"
 import axios from 'axios';
 import Avatar from 'react-avatar-edit'
+import { Navigate } from 'react-router-dom'
 
 function EditProfile() {
     const user = useSelector((state) => state.userProvider.user);
-    const src = useSelector((state) => state.userProvider.user.avatar);
-    console.log(src)
+    let avatar = useSelector((state) => state.userProvider.user.avatar);
     const MAX_SIZE = 711680;
-    let [username, setUsername] = useState("");
+    let [username, setUsername] = useState(null);
     let [title, setTitle] = useState("");
     let [preview, setPreview] = useState(null);
-    console.log(preview)
 
-    function onHandleUpdate(event) {
+    const onHandleUpdate = async(event) => {
         event.preventDefault();
-        axios({
-            url: "http://localhost:3001/users/" + user.intra_id,
-            method: "PATCH",
-            headers: {
-                Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
-            },
-            data: { username }
-        }).then(res => {
-            console.log("resrersrers")
-            console.log(res.data)
-            sessionStorage.setItem('user', JSON.stringify(res.data))
-            window.location = "http://localhost:3000/";
-        }).catch(err => console.error(err))
+        
+        let blob = null
+        let mimeType = null
+        let file = null
+        const image = new FormData()
+
+        axios(preview)
+            .then(res => {
+                blob = res.data;
+                mimeType = res.headers["content-type"] // png, jpeg...
+                file = new File([blob], "avatar_file", { type: mimeType });
+                image.append('image', file)
+                axios({
+                    url: "http://localhost:3001/profils/avatar",
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+                    },
+                    data: image 
+                }).then(res => {
+                    avatar = res.data.image_url;
+                    axios({
+                        url: "http://localhost:3001/users/" + user.intra_id,
+                        method: "PATCH",
+                        headers: {
+                            Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+                        },
+                        data: { username, avatar }
+                    }).then(res => {
+                        console.log("resrersrers")
+                        console.log(res.data)
+                        sessionStorage.setItem('user', JSON.stringify(res.data));
+                        <Navigate to="/"/>
+                    }).catch(err => console.error(err))
+                })
+            })
     }
 
       
     function onClose()          {    setPreview(null);       }
     function onCrop(preview)    {    setPreview(preview);  }
-    function onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > MAX_SIZE) {
-          alert("File size too big!");
-          elem.target.value = "";
-        };
-      }
 
     return (
         <>
@@ -56,7 +73,7 @@ function EditProfile() {
                                         <div className="profile-header-img">
                                             {
                                                 preview ?
-                                                <img style={{ height: "100%"}} className="img-thumbnail" src={ preview } alt="Preview"/>
+                                                <img style={{ height: "100%"}} className="img-thumbnail"  src={ preview } alt="Preview"/>
                                                 :
                                                 <img style={{ height: "100%"}} className="img-thumbnail" src={ user.avatar } alt="Preview"/>
                                             }
@@ -78,9 +95,9 @@ function EditProfile() {
                                             height={295}
                                             onCrop={onCrop}
                                             onClose={onClose}
-                                            onBeforeFileLoad={onBeforeFileLoad}
-                                            src={src}
-                                            alt=""
+                                            
+                                            src={ avatar }
+                                            alt="Avatar"
                                         />
                                     </div>
 
