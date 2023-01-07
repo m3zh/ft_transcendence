@@ -33,7 +33,7 @@ export class ProfilsService {
   }
 
   findOne(id: number) {
-    return this.prisma.profils.findUnique({where: {uid: id}})
+    return this.prisma.profils.findUnique({ where: { uid: id } });
   }
 
   update(id: number, updateProfilDto: UpdateProfilDto) {

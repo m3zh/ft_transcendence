@@ -74,8 +74,7 @@ export class UsersService {
               push: blocked
         },
           }
-        }
-    )
+    });
     return intra_id
   }
   async deleteblocked(blocked: string, intra_id: number) {
