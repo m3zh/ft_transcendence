@@ -78,9 +78,9 @@ function EditProfile() {
                                         <div className="profile-header-img">
                                             {
                                                 preview ?
-                                                <img style={{ height: "100%"}} className="img-thumbnail"  src={ preview } alt="Preview"/>
+                                                <img style={{ objectFit: "cover" }} className="img-fluid"  src={ preview } alt="Preview"/>
                                                 :
-                                                <img style={{ height: "100%"}} className="img-thumbnail" src={ user.avatar } alt="Preview"/>
+                                                <img style={{ objectFit: "cover" }} className="img-fluid" src={ user.avatar } alt="Preview"/>
                                             }
                                         </div>
                                         <div className="profile-header-info">

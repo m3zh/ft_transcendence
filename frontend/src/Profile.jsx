@@ -15,7 +15,7 @@ function Profile() {
                             <div className="profile-header">
                                 <div className="profile-header-content">
                                     <div className="profile-header-img">
-                                        <img style={{ height: "100%"}} className="img-thumbnail" src={ user.avatar } alt=""/>
+                                        <img style={{ objectFit: "cover" }} className="img-fluid" src={ user.avatar } alt=""/>
                                     </div>
                                     <div className="profile-header-info">
                                         <h4 className="m-t-10 m-b-5">{ user.username }</h4>
