@@ -1,14 +1,16 @@
 import './style/Profile.css'
 import { useState, setState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import jsCookie from "js-cookie"
 import axios from 'axios';
 import Avatar from 'react-avatar-edit'
 import { useNavigate } from 'react-router-dom'
 import Image from 'react-bootstrap/Image'
+import { setCurrentUser } from './providers/userProvider';
 
 function EditProfile() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.userProvider.user);
     let avatar = useSelector((state) => state.userProvider.user.avatar);
     const MAX_SIZE = 711680;
@@ -53,6 +55,7 @@ function EditProfile() {
                     }).then(res => {
                         // console.log("resrersrers")
                         // console.log(res.data)
+                        dispatch(setCurrentUser(res.data))
                         sessionStorage.setItem('user', JSON.stringify(res.data));
                         navigate("/")
                     }).catch(err => console.error(err))
