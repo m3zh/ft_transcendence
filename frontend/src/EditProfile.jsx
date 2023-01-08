@@ -4,15 +4,17 @@ import { useSelector } from "react-redux";
 import jsCookie from "js-cookie"
 import axios from 'axios';
 import Avatar from 'react-avatar-edit'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Image from 'react-bootstrap/Image'
 
 function EditProfile() {
+    const navigate = useNavigate();
     const user = useSelector((state) => state.userProvider.user);
     let avatar = useSelector((state) => state.userProvider.user.avatar);
     const MAX_SIZE = 711680;
-    let [username, setUsername] = useState(null);
+    let [username, setUsername] = useState(user.username);
     let [title, setTitle] = useState("");
-    let [preview, setPreview] = useState(null);
+    let [preview, setPreview] = useState(avatar);
 
     const onHandleUpdate = async(event) => {
         event.preventDefault();
@@ -22,22 +24,25 @@ function EditProfile() {
         let file = null
         const image = new FormData()
 
-        axios(preview)
-            .then(res => {
-                blob = res.data;
-                mimeType = res.headers["content-type"] // png, jpeg...
-                file = new File([blob], "avatar_file", { type: mimeType });
-                image.append('image', file)
-                axios({
-                    url: "http://localhost:3001/profils/avatar",
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
-                    },
-                    data: image 
-                }).then(res => {
-                    avatar = res.data.image_url;
+        console.log(preview)
+        // axios(preview)
+        //     .then(res => {
+        //         blob = res.data;
+        //         mimeType = res.headers["content-type"] // png, jpeg...
+        //         file = new File([preview], "avatar_file", { type: mimeType });
+        //         image.append('image', file)
+        //         axios({
+        //             url: "http://localhost:3001/profils/avatar",
+        //             method: "POST",
+        //             headers: {
+        //                 'Content-Type': 'multipart/form-data',
+        //                 Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+        //             },
+        //             data: image 
+        //         }).then(res => {
+                    console.log("!!!")
+    
+                    avatar = preview;
                     axios({
                         url: "http://localhost:3001/users/" + user.intra_id,
                         method: "PATCH",
@@ -46,18 +51,18 @@ function EditProfile() {
                         },
                         data: { username, avatar }
                     }).then(res => {
-                        console.log("resrersrers")
-                        console.log(res.data)
+                        // console.log("resrersrers")
+                        // console.log(res.data)
                         sessionStorage.setItem('user', JSON.stringify(res.data));
-                        <Navigate to="/"/>
+                        navigate("/")
                     }).catch(err => console.error(err))
-                })
-            })
+            //     })
+            // })
     }
-
       
     function onClose()          {    setPreview(null);       }
     function onCrop(preview)    {    setPreview(preview);  }
+
 
     return (
         <>
@@ -93,9 +98,10 @@ function EditProfile() {
                                         <Avatar
                                             width={390}
                                             height={295}
+                                            variant="square"
                                             onCrop={onCrop}
                                             onClose={onClose}
-                                            
+                                            scale={1.2}
                                             src={ avatar }
                                             alt="Avatar"
                                         />
@@ -109,6 +115,7 @@ function EditProfile() {
             </div>
         </>
     );
+                                        
 }
 
 export default EditProfile;
