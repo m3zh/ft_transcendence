@@ -27,17 +27,11 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-                <div className="container mt-5">
-                    <div className="row align-items-start">
-                        <div className="col">
-                            <Card title="Users Online"/>
-                        </div>
-                        <div className="col">
-                            <Card title="Friends"/>
-                        </div>
-                        <div className="col">
-                            <Card title="Ranking"/>
-                        </div>
+                <div className="container vh-100 mt-5">
+                    <div className="row h-100 align-items-start">
+                        <Card title="Users Status"/>
+                        <Card title="Friends"/>
+                        <Card title="Ranking"/>
                     </div>
                 </div>
             </div>

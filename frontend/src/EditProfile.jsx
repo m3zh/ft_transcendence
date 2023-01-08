@@ -26,7 +26,7 @@ function EditProfile() {
         let file = null
         const image = new FormData()
 
-        console.log(preview)
+        //console.log(preview)
         // axios(preview)
         //     .then(res => {
         //         blob = res.data;
@@ -42,7 +42,6 @@ function EditProfile() {
         //             },
         //             data: image 
         //         }).then(res => {
-                    console.log("!!!")
     
                     avatar = preview;
                     axios({
@@ -101,7 +100,6 @@ function EditProfile() {
                                         <Avatar
                                             width={390}
                                             height={295}
-                                            variant="square"
                                             onCrop={onCrop}
                                             onClose={onClose}
                                             scale={1.2}
