@@ -4,33 +4,35 @@ import axios from "axios"
 
 function SearchBar() {
     const [users, setUsers] = useState([])
-
-    const onLookup = (event) => {
-        event.preventDefault()
-
-    }
+    const [searchkey,setSearchkey] = useState(null)
 
     useEffect(() => {
         axios.get('http://localhost:3001/users').
         then( users => { 
-            setUsers(users.data)
+            setUsers(users.data.filter((u) => u.username.startsWith(searchkey)))
         })
-    }, [onLookup]);
+        console.log("searchkey")
+        console.log(searchkey)
+        console.log(users)
+    }, [searchkey]);
 
     return (
         <>
             <form className="d-flex">
                 <div className="dropdown">
-                    <input onInput={ (event) => { onLookup(event) } }className="form-control me-2" type="search" placeholder="Search for users" aria-label="Search"/>
+                    <input onInput={ (e) => { setSearchkey(e.target.value) } } className="form-control me-2" type="search" placeholder="Search for users" aria-label="Search"/>
                     {
-                        users ?
+                        searchkey &&
 
                             <div className="dropdown-menu show">
-                                { users.map((u) => <Link className="dropdown-item" to="http://localhost:3000/users/:{u.intra_id}">{ u.username }</Link>) }
+                                { 
+                                    users.length ?
+                                    users.map((u) => <Link className="dropdown-item" to="/users/:u.intra_id">{ u.username }</Link>) 
+                                :
+                                    <Link className="dropdown-item disabled">No match</Link>
+                                }
                             </div>
-                        
-                        :
-                        null
+
                     }
                 </div>
             </form>
