@@ -14,7 +14,7 @@ function Card({ title }) {
 
   return (
       <>
-        <div className="col h-100">
+        <div className="col h-100 align-content-center">
           <div className="card h-100 border-light mb-3" style={{ maxWidth: "18rem"}}>
             <div className="card-header">
                 <h5>{ title }</h5>
@@ -23,7 +23,7 @@ function Card({ title }) {
               { 
                 users && users.map((u) =>
                     <div class="card-body">
-                      <p class="card-title">{ u.username }</p>
+                      <p key={ u.uid } class="card-title">{ u.username }</p>
                     </div>)
               }
             </div>

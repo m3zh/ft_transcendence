@@ -42,7 +42,7 @@ function EditProfile() {
         //             },
         //             data: image 
         //         }).then(res => {
-    
+                    const first_login = false
                     avatar = preview;
                     axios({
                         url: "http://localhost:3001/users/" + user.intra_id,
@@ -50,7 +50,7 @@ function EditProfile() {
                         headers: {
                             Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
                         },
-                        data: { username, avatar }
+                        data: { username, avatar, first_login }
                     }).then(res => {
                         // console.log("resrersrers")
                         // console.log(res.data)
@@ -69,6 +69,17 @@ function EditProfile() {
     return (
         <>
             <div className="container">
+                {
+                    user.first_login ?
+                        <div className="row profile-header mt-5">
+                            <div className="profile-header-content row align-items-start">
+                                <h1 className="m-10 text-center">Welcome to the platform!</h1>
+                                <h3 className="m-10 text-center">Tell us something about yourself</h3>
+                            </div>
+                        </div>
+                    :
+                    null
+                }
                 <div className="row">
                     <div className="col-md-12">
                         <div className="profile">
