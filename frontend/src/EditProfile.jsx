@@ -5,7 +5,7 @@ import jsCookie from "js-cookie"
 import axios from 'axios';
 import Avatar from 'react-avatar-edit'
 import { useNavigate } from 'react-router-dom'
-import Image from 'react-bootstrap/Image'
+import { ToastContainer, toast } from 'react-toastify';
 import { setCurrentUser } from './providers/userProvider';
 
 function EditProfile() {
@@ -52,12 +52,11 @@ function EditProfile() {
                         },
                         data: { username, avatar, first_login }
                     }).then(res => {
-                        // console.log("resrersrers")
-                        // console.log(res.data)
+                        toast.success("Success!", { position: toast.POSITION.TOP_RIGHT });
                         dispatch(setCurrentUser(res.data))
                         sessionStorage.setItem('user', JSON.stringify(res.data));
                         navigate("/")
-                    }).catch(err => console.error(err))
+                    }).catch(err => toast.error(err, { position: toast.POSITION.TOP_RIGHT }))
             //     })
             // })
     }
@@ -103,7 +102,7 @@ function EditProfile() {
                                                 <label>Wanna add a personal note?</label><br></br>
                                                 <input className="m-t-10 m-b-5" placeholder="ex: the best player ever" onChange={ (e)=> setTitle(e.target.value) }/><br></br>
                                                 <button type="submit" onClick={ (event) => onHandleUpdate(event) } className="btn btn-sm btn-warning mt-3">Update Profile</button>
-                                            </form> 
+                                            </form>
                                         </div>
                                     </div>
 
@@ -125,6 +124,7 @@ function EditProfile() {
                     </div>
                 </div>
             </div>
+            <ToastContainer autoClose={500}/>
         </>
     );
                                         

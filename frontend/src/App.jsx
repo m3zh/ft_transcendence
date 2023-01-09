@@ -4,6 +4,7 @@ import {
   Route,
   Routes
 } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.jsx'
@@ -13,6 +14,7 @@ import Pong from './pong/Pong.jsx'
 import {AuthProvider} from "./providers/index.jsx";
 import Navbar from "./Navbar.jsx";
 import EditProfile from "./EditProfile";
+
 
 function App() {
 

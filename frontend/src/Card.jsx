@@ -23,7 +23,7 @@ function Card({ title }) {
               { 
                 users && users.map((u) =>
                     <div key={ u.uid } class="card-body">
-                      <p class="card-title">{ u.username }</p>
+                      <p className="card-title">{ u.username }</p>
                     </div>)
               }
             </div>
