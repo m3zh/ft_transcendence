@@ -13,4 +13,16 @@ export class CreateGameDto {
     @IsInt()
     @ApiProperty()
     score2: number
+
+    @IsInt()
+    @ApiProperty()
+    player1Id: number
+
+    @IsInt()
+    @ApiProperty()
+    player2Id: number
+
+    @IsInt()
+    @ApiProperty()
+    winnerId: number
 }

@@ -22,7 +22,6 @@ model Users {
   friends       String[]
   blacklist     String[]
   groups        String[]
-  games         GameOnUsers[]
 }
 
 model Session {
@@ -46,15 +45,7 @@ model Game {
     isActive    Boolean         @default(false)
     score1      Int
     score2      Int
-    users       GameOnUsers[]
+    player1Id   Int            @default(0)
+    player2Id   Int            @default(1)
+    winnerId    Int            @default(0)
 }
-
-model GameOnUsers {
-    player      Users   @relation(fields: [playerId], references: [uid])
-    playerId    Int
-    game        Game    @relation(fields: [gameId], references: [id])
-    gameId      Int
-
-    @@id([playerId, gameId])
-}
-
