@@ -23,7 +23,7 @@ function App() {
                     <Route exact path="/" element={<Home />} />
                     <Route path="/editprofile" element={<EditProfile />} />
                     <Route path="/pong" element={<Pong />} />
-                    <Route component={NotFound}/>
+                    <Route path="*" element={<NotFound/>}/>
                 </Routes>
         </Router>
     );
