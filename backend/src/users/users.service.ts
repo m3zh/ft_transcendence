@@ -67,10 +67,10 @@ export class UsersService {
     });
   }
 
-  addblocked(blocked: string, intra_id: number) {
+  addblocked(blocked: string, id: number) {
     const amp = parseInt(blocked)
-    this.prisma.users.update({
-      where: { intra_id: amp },
+    return this.prisma.users.update({
+      where: { intra_id: id },
           data: {
               blacklist: {
                     push: blocked

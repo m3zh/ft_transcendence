@@ -63,7 +63,7 @@ export class UsersController {
   @Post('friends/add')
   @UseGuards(JwtAuthGuard)
   addfriends(@Body('friends') friends: string, @Request() req) {
-    return this.usersService.addfriends(friends, req.user.intra_id);
+    return this.usersService.addfriends(friends, req.user.login42);
   }
   @UseGuards(JwtAuthGuard)
   @Delete('friends/delete')
@@ -73,11 +73,11 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('block/add/:blocked')
   addblocked(@Param('blocked') blocked: string, @Request() req) {
-    return this.usersService.addblocked(blocked, req.user.intra_id);
+    return this.usersService.addblocked(blocked, req.user.login42);
   }
   @UseGuards(JwtAuthGuard)
   @Get('block/delete/:id')
   deleteblocked(@Param('id') blocked: string, @Request() req) {
-    return this.usersService.deleteblocked(blocked, req.user.intra_id);
+    return this.usersService.deleteblocked(blocked, req.user.login42);
   }
 }
