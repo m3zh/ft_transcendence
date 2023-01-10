@@ -1,20 +1,33 @@
 import './style/Profile.css'
-import { Link } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
 import Card from "./Card.jsx"
 import EditProfile from "./EditProfile.jsx"
+import axios from 'axios';
+import Dashboard from './Dashboard';
 
 function Profile() {
-    const user = useSelector((state) => state.userProvider.user);
-    console.log(user)
+    const params = useParams();
+    const currentUser = useSelector((state) => state.userProvider.user);
+    const [user, setUser] = useState(null)
+    
 
-    return (
-        <>
-        {
-            user.first_login ?
-                <EditProfile />
-            :
-            
+    useEffect(() => {
+        axios.get("http://localhost:3001/users/" + params.id).then(
+            u => {
+                setUser(u.data)
+           }
+        )
+    }, [user])
+
+    if (user)
+        return (
+            <>
+            {   
+                currentUser.intra_id == params.id ?
+                    <Dashboard />
+                :
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -27,9 +40,6 @@ function Profile() {
                                         <div className="profile-header-info">
                                             <h4 className="m-t-10 m-b-5">{ user.username }</h4>
                                             <p className="m-b-10">{ user.subtitle }</p>
-                                            <Link to="/editProfile" className="btn btn-sm btn-info mb-2">Edit Profile</Link>
-                                        </div>
-                                        <div className="col position-absolute end-0">
                                             <Link to="/editProfile" className="btn btn-sm end-0 btn-success mx-2">Add Friend</Link>
                                             <Link to="/editProfile" className="btn btn-sm end-0 btn-danger mx-2">Block User</Link>
                                         </div>
@@ -38,18 +48,10 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="container vh-100 my-5">
-                        <div className="row h-100 justify-content-center mx-5">
-                            <Card title="Users Status"/>
-                            <Card title="Friends"/>
-                            <Card title="Ranking"/>
-                        </div>
-                    </div>
                 </div>
-            
-        }
-        </>
-    );
-}
+            }
+            </>
+        );
+    }
 
 export default Profile;

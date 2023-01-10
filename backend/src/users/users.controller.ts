@@ -31,7 +31,7 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get(':uid')
   async findOne(@Param('uid') id: string, @Request() req) {
     return this.usersService.findOne(+id);

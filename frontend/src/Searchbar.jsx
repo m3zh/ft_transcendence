@@ -11,9 +11,6 @@ function SearchBar() {
         then( users => { 
             setUsers(users.data.filter((u) => u.username.startsWith(searchkey)))
         })
-        console.log("searchkey")
-        console.log(searchkey)
-        console.log(users)
     }, [searchkey]);
 
     return (
@@ -24,10 +21,10 @@ function SearchBar() {
                     {
                         searchkey &&
 
-                            <div className="dropdown-menu show">
+                            <div className="dropdown-menu w-100 show">
                                 { 
                                     users.length ?
-                                    users.map((u) => <Link className="dropdown-item" to="/users/:u.intra_id">{ u.username }</Link>) 
+                                    users.map((u) => <Link key={u.intra_id} className="dropdown-item" to={`/users/${u.intra_id}`}>{ u.username }</Link>) 
                                 :
                                     <Link className="dropdown-item disabled">No match</Link>
                                 }
