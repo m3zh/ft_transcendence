@@ -25,7 +25,9 @@ function EditProfile() {
         axios(preview)
             .then(res => {
                 blob = res.data;
-                mimeType = res.headers["content-type"] // png, jpeg...
+                mimeType = res.headers["content-type"]
+                console.log(blob)
+                console.log(res)// png, jpeg...
                 file = new File([blob], "avatar_file", { type: mimeType });
                 image.append('image', file)
                 axios({

@@ -63,11 +63,11 @@ export class UsersService {
           }
     });
   }
-  addblocked(blocked: string, intra_id: number) {
+  addblocked(blocked: string, idintra: number) {
     const amp = parseInt(blocked)
-    this.prisma.users.update(
+    return this.prisma.users.update(
         {
-      where: { intra_id: amp },
+      where: { intra_id: idintra},
           data: {
         blacklist: {
               push: blocked
@@ -75,13 +75,12 @@ export class UsersService {
           }
         }
     )
-    return intra_id
   }
-  async deleteblocked(blocked: string, intra_id: number) {
-    const amp = parseInt(blocked)
+  async deleteblocked(blocked: string, idintra: number) {
+    const amp = parseInt(blocked);
     const user = await this.prisma.users.findUnique({
       where: {
-        intra_id: amp,
+        intra_id: idintra,
       },
     })
     const find = user.friends.indexOf(blocked)
@@ -89,12 +88,12 @@ export class UsersService {
     {
       throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     }
-    user.blacklist.splice(find, 1)
+    user.blacklist.splice(find, 1);
     return this.prisma.users.update(
         {
-          where: {intra_id: amp},
+      where: { intra_id: idintra },
           data: {
-            blacklist: user.blacklist
+        blacklist: user.blacklist,
           }
         }
     )
