@@ -40,12 +40,13 @@ model Profils {
 }
 
 model Game {
-    id         Int             @unique @default(autoincrement())
+    id          Int             @unique @default(autoincrement())
     createdAt   DateTime        @default(now())
     isActive    Boolean         @default(false)
-    score1      Int
-    score2      Int
-    player1Id   Int            @default(0)
-    player2Id   Int            @default(1)
-    winnerId    Int            @default(0)
+    inQueue     Boolean         @default(true)
+    score1      Int             @default(0)
+    score2      Int             @default(0)
+    player1Id   Int             @default(0)
+    player2Id   Int             @default(0)
+    winnerId    Int             @default(0)
 }

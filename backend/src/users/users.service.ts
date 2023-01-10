@@ -19,7 +19,7 @@ export class UsersService {
       throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     const content = await this.prisma.users.findUnique({where: {intra_id : uid}})
     if(!content) {
-        throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
+      throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     }
     return content
   }
@@ -27,7 +27,7 @@ export class UsersService {
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.prisma.users.update({
       where: { intra_id: id },
-          data: updateUserDto
+      data: updateUserDto
     });
   }
 
@@ -60,23 +60,23 @@ export class UsersService {
     user.friends.splice(find, 1)
     return this.prisma.users.update(
         {
-      where: { intra_id: amp },
+          where: { intra_id: amp },
           data: {
-        friends: user.friends,
+            friends: user.friends,
           }
-    });
+        });
   }
 
   addblocked(blocked: string, id: number) {
     const amp = parseInt(blocked)
     return this.prisma.users.update({
-      where: { intra_id: id },
+          where: { intra_id: id },
           data: {
-              blacklist: {
-                    push: blocked
-              },
+            blacklist: {
+              push: blocked
+            },
           }
-      }
+        }
     )
   }
 
@@ -95,9 +95,9 @@ export class UsersService {
     user.blacklist.splice(find, 1);
     return this.prisma.users.update(
         {
-      where: { intra_id: id },
+          where: { intra_id: id },
           data: {
-        blacklist: user.blacklist,
+            blacklist: user.blacklist,
           }
         }
     )

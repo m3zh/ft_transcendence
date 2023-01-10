@@ -26,7 +26,7 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/users/:id" element={<Profile />} />
                     <Route path="/editprofile" element={<EditProfile />} />
-                    <Route path="/pong" element={<Pong />} />
+                    <Route path="/play" element={<GameMenu />} />
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
         </Router>

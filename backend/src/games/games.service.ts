@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateGameDto } from "./dto/create-game.dto";
+import { UpdateGameDto } from "./dto/update-game.dto";
 
 @Injectable()
 export class GamesService {
@@ -21,17 +22,33 @@ export class GamesService {
         }
         return content
     }
-/*
-    update(id: string, updateGamesDto: UpdateGamesDto) {
+
+    update(id: string, updateGameDto: UpdateGameDto) {
         return this.prisma.game.update(
             {
                 where: {id: parseInt(id)},
-                data: updateGamesDto
+                data: updateGameDto
             }
         )
     }
-*/
+
     remove(id: string) {
         return this.prisma.game.delete({where: {id: parseInt(id)}})
+    }
+
+    active() {
+        return this.prisma.game.findMany({
+            where: {
+                isActive: true
+            }
+        })
+    }
+
+    queue() {
+        return this.prisma.game.findMany({
+            where: {
+                inQueue: true
+            }
+        })
     }
 }
