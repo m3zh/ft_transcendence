@@ -3,6 +3,7 @@ import { routes } from "./api/routes.ts";
 import { useCallback, useEffect } from "react";
 import { setCurrentUser, setToken } from "./providers/userProvider.js";
 import { Link } from "react-router-dom"
+import SearchBar from "./Searchbar";
 
 function Navbar() {
     const loggedIn = useSelector((state) => state.userProvider.token);
@@ -38,10 +39,7 @@ function Navbar() {
                                 <Link className="nav-link" to="/chat">Chat</Link>
                             </li>
                         </ul>
-                        <form className="d-flex">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                            <button className="btn btn-outline-grey" type="submit">Search</button>
-                        </form>
+                        <SearchBar/>
                         {
                             loggedIn.length ?
                                 <ul className="navbar-nav mb-2 mb-lg-0">

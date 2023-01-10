@@ -1,15 +1,10 @@
-import React, {useContext} from 'react';
-import {AuthContext} from "./providers/index.jsx";
-
 function NotFound() {
-    const ctx = useContext(AuthContext);
-    console.log(ctx);
 
     return (
         <>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="error-header"> </div>
-            <div className="container ">
+            <div className="container mt-5">
                 <section className="error-container text-center">
                     <h1>404</h1>
                     <div className="error-divider">
