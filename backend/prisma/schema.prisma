@@ -38,3 +38,14 @@ model Profils {
     type        String?
     information String      @id @default(uuid())
 }
+
+model Game {
+    id         Int             @unique @default(autoincrement())
+    createdAt   DateTime        @default(now())
+    isActive    Boolean         @default(false)
+    score1      Int
+    score2      Int
+    player1Id   Int            @default(0)
+    player2Id   Int            @default(1)
+    winnerId    Int            @default(0)
+}

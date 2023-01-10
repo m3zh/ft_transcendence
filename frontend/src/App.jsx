@@ -1,4 +1,3 @@
-import React, {useContext} from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,6 +13,7 @@ import Profile from './Profile.jsx'
 import EditProfile from "./EditProfile";
 import Pong from './pong/Pong.jsx'
 import NotFound from './NotFound.jsx'
+import GameMenu from "./pong/GameMenu.jsx";
 
 
 function App() {
