@@ -33,11 +33,12 @@ export class UsersService {
   remove(id: number) {
     return this.prisma.users.delete({ where: { uid: id } });
   }
+
   addfriends(friends: string, intra_id: number) {
     const amp = parseInt(friends)
     return this.prisma.users.update(
         {
-          where: {intra_id: intra_id},
+          where: { intra_id: intra_id},
           data: {
             friends: {
               push: friends
@@ -46,6 +47,7 @@ export class UsersService {
         }
     )
   }
+
   async deletefriends(friends: string) {
     const amp = parseInt(friends)
     const user = await this.prisma.users.findUnique({
@@ -63,24 +65,25 @@ export class UsersService {
           }
     });
   }
-  addblocked(blocked: string, idintra: number) {
+
+  addblocked(blocked: string, intra_id: number) {
     const amp = parseInt(blocked)
-    return this.prisma.users.update(
-        {
-      where: { intra_id: idintra},
+    this.prisma.users.update({
+      where: { intra_id: amp },
           data: {
-        blacklist: {
-              push: blocked
-        },
+              blacklist: {
+                    push: blocked
+              },
           }
-        }
+      }
     )
   }
-  async deleteblocked(blocked: string, idintra: number) {
-    const amp = parseInt(blocked);
+
+  async deleteblocked(blocked: string, id: number) {
+    const amp = parseInt(blocked)
     const user = await this.prisma.users.findUnique({
       where: {
-        intra_id: idintra,
+        intra_id: id,
       },
     })
     const find = user.friends.indexOf(blocked)
@@ -91,7 +94,7 @@ export class UsersService {
     user.blacklist.splice(find, 1);
     return this.prisma.users.update(
         {
-      where: { intra_id: idintra },
+      where: { intra_id: id },
           data: {
         blacklist: user.blacklist,
           }
