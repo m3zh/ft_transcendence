@@ -12,6 +12,8 @@ export class UpdateGameDto extends PartialType(CreateGameDto) {
     @ApiProperty()
     inQueue: boolean;
     @ApiProperty()
+    player2: string;
+    @ApiProperty()
     player2Id: number;
     @ApiProperty()
     winnerId: number;

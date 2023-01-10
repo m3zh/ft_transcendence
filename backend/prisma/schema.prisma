@@ -46,7 +46,10 @@ model Game {
     inQueue     Boolean         @default(true)
     score1      Int             @default(0)
     score2      Int             @default(0)
+    player1     String?
+    player2     String?
     player1Id   Int             @default(0)
     player2Id   Int             @default(0)
     winnerId    Int             @default(0)
+
 }

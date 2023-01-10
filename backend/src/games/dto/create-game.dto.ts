@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsInt } from "class-validator";
+import { IsInt, IsString } from "class-validator";
 
 export class CreateGameDto {
     @IsInt()
@@ -13,6 +13,14 @@ export class CreateGameDto {
     @IsInt()
     @ApiProperty()
     score2: number
+
+    @IsString()
+    @ApiProperty()
+    player1: string
+
+    @IsString()
+    @ApiProperty()
+    player2: string
 
     @IsInt()
     @ApiProperty()

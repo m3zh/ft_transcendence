@@ -5,42 +5,75 @@ import {useSelector} from "react-redux";
 function GameMenu() {
     const [activeGames, setActiveGames] = useState([]);
     const [userInQueue, setUserInQueue] = useState(false);
+    const [gamesInQueue, setGamesInQueue] = useState([]);
     const user = useSelector((state) => state.userProvider.user);
-
-    function createGame() {
-
-    }
 
     const onHandleGame = useCallback((event) => {
         event.preventDefault();
-        if (queue.empty()) {
-            /* createGame
-            */
+        if (gamesInQueue.length === 0) {
+// PROBLEME : SI LA QUEUE EST VIDE, ON APL LA CALLBACK ?? JSP A TEST
+            /* createGame  */
             axios({
-                url: "http://localhost:3001/games/",
+                url: "http://localhost:3001/games",
                 method: "POST",
                 data: {
-                    player1Id: user.intra_id
+                    player1Id: user.intra_id,
+                    player1: user.username
                 }
             }).then(res => {
                 setUserInQueue(true);
-                queue.enqueue(user);
-                console.log(res)
             }).catch(err => console.error(err))
         } else {
-            queue.enqueue(user);
+            // trouver la game la plus ancienne inqueue, la dequeue
+            // et dequeue l'user qui l'a créé
+            axios({
+                url: "http://localhost:3001/games/queue",
+                method: "GET",
+            }).then(res => {
+                axios({
+                    url: "http://localhost:3001/games/update/" + res.data[0].id,
+                    method: "PUT",
+                    data: {
+                        player2Id: user.intra_id,
+                        player2: user.username
+                    }
+                }).then(res => {
+                    setUserInQueue(true);
+                }).catch(err => console.error(err))
+            }).catch(err => console.error(err))
         }
-    }, [setUserInQueue, user]);
+
+        /* update queue */
+        axios({
+            url: "http://localhost:3001/games/queue",
+            method: "GET"
+        }).then(res => {
+            setGamesInQueue(res.data);
+        }).catch(err => console.error(err))
+    }, [gamesInQueue, user]);
 
     useEffect(() => {
 
+        /* updateActiveGames */
+        axios({
+            url: "http://localhost:3001/games/active",
+            method: "GET"
+        }).then(res => {
+            setActiveGames(res.data);
+        }).catch(err => console.error(err))
     }, [onHandleGame]);
 
     return (
         <div className="d-flex justify-content-center">
             <div className="align-items-center">
                 {   activeGames.length ?
-                        <div className="">
+                        <div className="activeGamesContainer">
+                            { activeGames.map((game =>
+                                    <div className="activeGameContainer">
+                                        <p>{game.player1}  vs  {game.player2}</p>
+                                    </div>
+                                ))
+                            }
                         </div>
                     :
                         <p className="">There is actually no game...</p>
