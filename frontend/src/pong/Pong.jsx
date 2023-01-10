@@ -29,7 +29,6 @@ function Pong()
     const [winner, setWinner] = useState('');
     const [speed, setSpeed] = useState(0);
     const canvasRef = useRef();
-    console.log(sessionStorage.getItem('user'))
 
                                     /* INIT FUNCTIONS */
 

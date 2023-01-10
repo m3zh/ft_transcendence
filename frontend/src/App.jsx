@@ -3,6 +3,7 @@ import {
   Route,
   Routes
 } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import Home from './Home.jsx'
@@ -12,19 +13,18 @@ import Navbar from "./Navbar.jsx";
 import EditProfile from "./EditProfile";
 import GameMenu from "./pong/GameMenu.jsx";
 
+
 function App() {
 
     return (
         <Router >
-            <AuthProvider>
                 <Navbar />
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/editprofile" element={<EditProfile />} />
-                    <Route path="/play" element={<GameMenu />} />
-                    <Route component={NotFound}/>
+                    <Route path="/pong" element={<Pong />} />
+                    <Route path="*" element={<NotFound/>}/>
                 </Routes>
-            </AuthProvider>
         </Router>
     );
 }

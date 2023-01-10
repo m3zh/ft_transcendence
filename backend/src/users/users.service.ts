@@ -20,27 +20,24 @@ export class UsersService {
     if(!content) {
         //throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND)
     }
-    console.log()
     return content
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return this.prisma.users.update(
-        {
-          where: {uid: id},
+    return this.prisma.users.update({
+      where: { intra_id: id },
           data: updateUserDto
-        }
-    )
+    });
   }
 
   remove(id: number) {
-    return this.prisma.users.delete({where: {uid: id}})
+    return this.prisma.users.delete({ where: { uid: id } });
   }
-  addfriends(friends: string) {
+  addfriends(friends: string, intra_id: number) {
     const amp = parseInt(friends)
     return this.prisma.users.update(
         {
-          where: {intra_id: amp},
+          where: {intra_id: intra_id},
           data: {
             friends: {
               push: friends
@@ -60,27 +57,27 @@ export class UsersService {
     user.friends.splice(find, 1)
     return this.prisma.users.update(
         {
-          where: {intra_id: amp},
+      where: { intra_id: amp },
           data: {
-            friends: user.friends
+        friends: user.friends,
           }
-        }
-    )
+    });
   }
-  addblocked(blocked: string) {
+  addblocked(blocked: string, intra_id: number) {
     const amp = parseInt(blocked)
-    return this.prisma.users.update(
+    this.prisma.users.update(
         {
-          where: {intra_id: amp},
+      where: { intra_id: amp },
           data: {
-            blacklist: {
+        blacklist: {
               push: blocked
-            }
+        },
           }
         }
     )
+    return intra_id
   }
-  async deleteblocked(blocked: string) {
+  async deleteblocked(blocked: string, intra_id: number) {
     const amp = parseInt(blocked)
     const user = await this.prisma.users.findUnique({
       where: {
