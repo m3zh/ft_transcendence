@@ -24,6 +24,12 @@ model Users {
   groups        String[]
 }
 
+model friends {
+    id Int @id @default(autoincrement())
+    requester String @unique
+    status String?
+    friends String?
+}
 model Session {
   id        String   @id
   sid       String   @unique
