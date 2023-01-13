@@ -28,8 +28,9 @@ const Dashboard: FC = () =>  {
                                         </div>
                                         <div className="profile-header-info">
                                             <h4 className="m-t-10 m-b-5">{ user["username"] }</h4>
-                                            <p className="m-b-10">{ user["subtitle"] }</p>
-                                            <Link to="/editProfile" className="btn btn-sm btn-info mb-2">Edit Profile</Link>
+                                            { user["title"] && <h6 className="m-b-10">{ user["title"] }</h6> }
+                                            { user["mail"] && <h6 className="m-b-10">MP: { user["mail"] }</h6> } 
+                                            <Link to="/editProfile" className="btn btn-sm btn-info mt-2">Edit Profile</Link>
                                         </div>
                                         <div className="col position-absolute end-0">
                                             <Link to="/editProfile" className="btn btn-sm end-0 btn-success mx-2">Start Game</Link>

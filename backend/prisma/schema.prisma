@@ -19,6 +19,9 @@ model Users {
   dblauth       Boolean  @default(false)
   first_login   Boolean  @default(true)
   mail          String?  @unique
+  status        String?  @default("online")
+  title         String?  @default("A newbie pong player")
+  max_score     Int      @default(0)
   friends       String[]
   blacklist     String[]
   groups        String[]

@@ -49,7 +49,8 @@ const Profile: FC = () => {
                                     </div>
                                     <div className="profile-header-info">
                                         <h4 className="m-t-10 m-b-5">{ user["username"] }</h4>
-                                        <p className="m-b-10">{ user["subtitle"] }</p>
+                                        { user["title"] && <h6 className="m-b-10">{ user["title"] }</h6> }
+                                        { user["mail"] && <h6 className="m-b-10">MP: { user["mail"] }</h6> }                                   
                                         <Link to="/editProfile" className="btn btn-sm end-0 btn-success mx-2">Add Friend</Link>
                                         <Link to="/editProfile" className="btn btn-sm end-0 btn-danger mx-2">Block User</Link>
                                     </div>

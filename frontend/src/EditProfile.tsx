@@ -16,7 +16,8 @@ const EditProfile: FC = () =>  {
     let avatar = useSelector((state: RootState) => state.userProvider.user["avatar"]);
     console.log(user)
     let [username, setUsername] = useState(user["username"]);
-    let [title, setTitle] = useState("");
+    let [title, setTitle] = useState(user["title"]);
+    let [mail, setMail] = useState(user["mail"]);
     let [preview, setPreview] = useState(avatar);
 
     const onHandleUpdate = async(event) => {
@@ -27,6 +28,13 @@ const EditProfile: FC = () =>  {
         let file = null
         const image = new FormData()
 
+        if (mail && mail.length)
+        {
+            const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(mail) == false)  {
+                toast.error("Mail format not valid"); return ;
+            }
+        }
         //console.log(preview)
         // axios(preview)
         //     .then(res => {
@@ -51,7 +59,7 @@ const EditProfile: FC = () =>  {
                         headers: {
                             Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
                         },
-                        data: { username, avatar, first_login }
+                        data: { username, avatar, first_login, mail, title }
                     }).then(res => {
                         toast.success("Success!", { position: toast.POSITION.TOP_RIGHT });
                         dispatch(setCurrentUser(res.data))
@@ -99,9 +107,11 @@ const EditProfile: FC = () =>  {
                                         <div className="profile-header-info">
                                             <form>
                                                 <label>Change your username</label><br></br>
-                                                <input /*style={{ placeholderTextColor: "gray" }}*/ className="m-t-10 m-b-5" placeholder={ user["username"] } onChange={ (e)=> setUsername(e.target.value) }/><br></br>
+                                                <input className="m-t-10 m-b-5" placeholder={ user["username"] } onChange={ (e)=> setUsername(e.target.value) }/><br></br>
                                                 <label>Wanna add a personal note?</label><br></br>
-                                                <input className="m-t-10 m-b-5" placeholder="ex: the best player ever" onChange={ (e)=> setTitle(e.target.value) }/><br></br>
+                                                <input maxLength={32} className="m-t-10 m-b-5" placeholder={ user["title"] } onChange={ (e)=> setTitle(e.target.value) }/><br></br>
+                                                <label>Wanna change email?</label><br></br>
+                                                <input className="m-t-10 m-b-5" placeholder={ user["mail"] } onChange={ (e)=> setMail(e.target.value) }/><br></br>                                               
                                                 <button type="submit" onClick={ (event) => onHandleUpdate(event) } className="btn btn-sm btn-warning mt-3">Update Profile</button>
                                             </form>
                                         </div>
@@ -123,7 +133,7 @@ const EditProfile: FC = () =>  {
                     </div>
                 </div>
             </div>
-            <ToastContainer autoClose={500}/>
+            <ToastContainer autoClose={1000}/>
         </>
     );
                                         
