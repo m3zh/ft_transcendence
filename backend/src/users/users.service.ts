@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import {CreateFriendsDto} from "./dto/create-friends.dto";
 
 @Injectable()
 export class UsersService {
@@ -73,8 +74,22 @@ export class UsersService {
     });
   }
 
-  async requestfriends(friends: string, req: any) {
-    return this.prisma.friends.findMany();
+  async requestfriends(friends: CreateFriendsDto, demand: string) {
+    console.log(friends + '\n ----------\n' + demand);
+    return this.prisma.friends.createMany({
+      data: [
+        {
+          requester: demand.toString(),
+          status: 'confirm',
+          friends: friends.friends,
+        },
+        {
+          requester: friends.friends,
+          status: 'confirm',
+          friends: demand.toString(),
+        },
+      ],
+    });
   }
   async deleteblocked(blocked: string, idintra: number) {
     const amp = parseInt(blocked);
