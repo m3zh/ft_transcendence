@@ -1,11 +1,12 @@
-import Login from './Login.jsx'
-import Dashboard from './Dashboard.jsx'
+import Login from './Login'
+import Dashboard from './Dashboard'
 import { useSelector } from "react-redux";
-import Navbar from "./Navbar.jsx";
+import Navbar from "./Navbar";
 import React from "react";
+import { RootState } from './providers/store';
 
 function Home() {
-    const jwt = useSelector((state) => state.userProvider.token);
+    const jwt = useSelector((state: RootState) => state.userProvider.token);
 
     return (
         <>

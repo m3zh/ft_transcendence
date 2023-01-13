@@ -2,31 +2,32 @@ import {
   BrowserRouter as Router,
   Route,
   Routes
-} from 'react-router-dom'
+} from 'react-router-dom';
+import { FC } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
-import Navbar from "./Navbar.jsx";
-import Home from './Home.jsx'
-import Dashboard from './Dashboard.jsx'
-import Profile from './Profile.jsx'
+import Navbar from "./Navbar";
+import Home from './Home'
+import Dashboard from './Dashboard'
+import Profile from './Profile'
 import EditProfile from "./EditProfile";
-import Pong from './pong/Pong.jsx'
-import NotFound from './NotFound.jsx'
-import GameMenu from "./pong/GameMenu.jsx";
+import Pong from './pong/Pong'
+import NotFound from './NotFound'
+import GameMenu from "./pong/GameMenu";
 
 
-function App() {
+const App: FC = () =>  {
 
     return (
         <Router >
                 <Navbar />
                 <Routes>
-                    <Route exact path="/" element={<Home />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/users/:id" element={<Profile />} />
                     <Route path="/editprofile" element={<EditProfile />} />
-                    <Route path="/pong" element={<Pong />} />
+                    {/*<Route path="/pong" element={<Pong />} />*/}
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
         </Router>
