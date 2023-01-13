@@ -1,17 +1,19 @@
 import './style/Profile.css'
+import { FC } from "react";
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
-import Card from "./Card.jsx"
-import EditProfile from "./EditProfile.jsx"
+import { RootState } from './providers/store';
+import Card from "./Card"
+import EditProfile from "./EditProfile"
 
-function Dashboard() {
-    const user = useSelector((state) => state.userProvider.user);
+const Dashboard: FC = () =>  {
+    const user = useSelector((state: RootState) => state.userProvider.user);
     console.log(user)
 
     return (
         <>
         {
-            user.first_login ?
+            user["first_login"] ?
                 <EditProfile />
             :
             
@@ -22,11 +24,11 @@ function Dashboard() {
                                 <div className="profile-header">
                                     <div className="profile-header-content">
                                         <div className="profile-header-img">
-                                            <img style={{ objectFit: "cover" }} className="img-fluid" src={ user.avatar } alt=""/>
+                                            <img style={{ objectFit: "cover" }} className="img-fluid" src={ user["avatar"] } alt=""/>
                                         </div>
                                         <div className="profile-header-info">
-                                            <h4 className="m-t-10 m-b-5">{ user.username }</h4>
-                                            <p className="m-b-10">{ user.subtitle }</p>
+                                            <h4 className="m-t-10 m-b-5">{ user["username"] }</h4>
+                                            <p className="m-b-10">{ user["subtitle"] }</p>
                                             <Link to="/editProfile" className="btn btn-sm btn-info mb-2">Edit Profile</Link>
                                         </div>
                                         <div className="col position-absolute end-0">
