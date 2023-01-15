@@ -8,7 +8,6 @@ import EditProfile from "./EditProfile"
 
 const Dashboard: FC = () =>  {
     const user = useSelector((state: RootState) => state.userProvider.user);
-    console.log(user)
 
     return (
         <>
@@ -42,7 +41,7 @@ const Dashboard: FC = () =>  {
                     </div>
                     <div className="container vh-100 my-5">
                         <div className="row h-100 justify-content-center mx-5">
-                            <Card title="Users Status"/>
+                            <Card title="Users status"/>
                             <Card title="Friends"/>
                             <Card title="Ranking"/>
                         </div>
