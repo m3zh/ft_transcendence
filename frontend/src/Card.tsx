@@ -9,9 +9,22 @@ function Card({ title }) {
   status.set("offline", "bg-danger")
   status.set("in a game", "bg-warning")
 
+  function sortByScore(users) {
+    const ranked = users.slice(0);
+    ranked.sort(function(a,b) {
+      return b.max_score - a.max_score;
+    })
+    return ranked;
+  }
+
   useEffect(() => {
     axios.get('http://localhost:3001/users').then( users => { 
-        setUsers(users.data)
+        if (title === 'Ranking') {
+          let ranked = sortByScore(users.data)
+          setUsers(ranked)
+        }
+        else
+          setUsers(users.data)
       })
   }, [users]);
 
@@ -27,7 +40,12 @@ function Card({ title }) {
                 users && users.map((u) =>
                     <div key={ u["uid"] } className="card-body">
                       <p className="card-title">{ u["username"] }
-                        <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["status"]}</span>
+                        { 
+                          title === 'Ranking' ?
+                            <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["max_score"]}</span>
+                          :
+                            <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["status"]}</span>
+                        }
                       </p>
                     </div>)
               }
