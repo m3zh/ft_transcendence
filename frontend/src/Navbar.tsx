@@ -9,6 +9,8 @@ import SearchBar from "./Searchbar";
 function Navbar() {
     const loggedIn = useSelector((state: RootState) => state.userProvider.token);
     const dispatch = useDispatch();
+    console.log(loggedIn)
+    console.log("loggedIn")
 
     const onHandleClick = useCallback((event) => {
         event.preventDefault();
@@ -18,7 +20,7 @@ function Navbar() {
     useEffect(() => {
             dispatch(setToken(''));
             dispatch(setCurrentUser(''));
-    }, [onHandleClick]);
+    }, [onHandleClick, dispatch]);
 
     return (
         <>
@@ -39,18 +41,23 @@ function Navbar() {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/chat">Chat</Link>
                             </li>
-                        </ul>                    
+                        </ul>
+                        
+                            
+                        <button type="button" className="btn btn-secondary position-relative mx-3">
+                            &#128276;
+                            <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                <span className="visually-hidden">alert</span>
+                            </span>
+                        </button>
                         <SearchBar/>
-                        {
-                            loggedIn.length ?
-                                <ul className="navbar-nav mb-2 mb-lg-0">
-                                    <li className="nav-item">
-                                        <Link to="*" className="nav-link" onClick={ (event) => onHandleClick(event) }>Log Out</Link>
-                                    </li>
-                                </ul>
-                                :
-                                <></>
-                        }
+                        <ul className="navbar-nav mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <Link to="*" className="nav-link" onClick={ (event) => onHandleClick(event) }>Log Out</Link>
+                            </li>
+                        </ul>
+      
+                        
                     </div>
                 </div>
             </nav>

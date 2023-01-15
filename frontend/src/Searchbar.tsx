@@ -7,10 +7,7 @@ const SearchBar: FC = () => {
     const [searchkey,setSearchkey] = useState("")
 
     useEffect(() => {
-        axios.get('http://localhost:3001/users').
-        then( users => { 
-            console.log(users)
-            console.log(searchkey)
+        axios.get('http://localhost:3001/users').then( users => { 
             setUsers(users.data.filter((u) => u.username.startsWith(searchkey)))
         })
     }, [searchkey]);

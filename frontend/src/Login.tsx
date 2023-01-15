@@ -18,12 +18,10 @@ function Login() {
     }, []);
 
     useEffect(() => {
-        console.log("here")
         if (jsCookie.get('jwt_token')) {
             console.log("cookies")
             dispatch(setToken(jsCookie.get('jwt_token')));
             const decoded = jwtDecode<any>(jsCookie.get('jwt_token'));
-            console.log(decoded)
             if (!user["login42"]) {
                 axios({
                         url: "http://localhost:3001/users/" + decoded.login42,
@@ -36,7 +34,7 @@ function Login() {
                 }).catch(err => console.error(err))
             }
         }
-    }, [onHandleSubmit]);
+    }, [onHandleSubmit, dispatch, user]);
 
     return (
         <div className="App d-flex align-items-center justify-content-center">

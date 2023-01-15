@@ -1,7 +1,6 @@
 import Login from './Login'
 import Dashboard from './Dashboard'
 import { useSelector } from "react-redux";
-import Navbar from "./Navbar";
 import React from "react";
 import { RootState } from './providers/store';
 

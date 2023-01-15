@@ -14,7 +14,6 @@ const EditProfile: FC = () =>  {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.userProvider.user);
     let avatar = useSelector((state: RootState) => state.userProvider.user["avatar"]);
-    console.log(user)
     let [username, setUsername] = useState(user["username"]);
     let [title, setTitle] = useState(user["title"]);
     let [mail, setMail] = useState(user["mail"]);
@@ -23,15 +22,15 @@ const EditProfile: FC = () =>  {
     const onHandleUpdate = async(event) => {
         event.preventDefault();
         
-        let blob = null
-        let mimeType = null
-        let file = null
-        const image = new FormData()
+        // let blob = null
+        // let mimeType = null
+        // let file = null
+        // const image = new FormData()
 
         if (mail && mail.length)
         {
-            const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-            if (reg.test(mail) == false)  {
+            const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w\w+)+$/;
+            if (reg.test(mail) === false)  {
                 toast.error("Mail format not valid"); return ;
             }
         }

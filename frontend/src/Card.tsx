@@ -10,8 +10,7 @@ function Card({ title }) {
   status.set("in a game", "bg-warning")
 
   useEffect(() => {
-    axios.get('http://localhost:3001/users').
-      then( users => { 
+    axios.get('http://localhost:3001/users').then( users => { 
         setUsers(users.data)
       })
   }, [users]);

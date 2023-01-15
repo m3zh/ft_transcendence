@@ -3,8 +3,6 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import { useEffect, useState, FC } from 'react';
 import { RootState } from './providers/store';
-import Card from "./Card"
-import NotFound from './NotFound';
 import axios from 'axios';
 import Dashboard from './Dashboard';
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,13 +19,11 @@ const Profile: FC = () => {
             .then(
                 u => {
                     setUser(u.data)
-                    console.log(u.data)
-            }
-            ).catch(e => {
+            }).catch(e => {
                 toast.error(e);
                 navigate('404')
             })
-    }, [user])
+    }, [user, navigate, params.id])
 
     if (!user)
         return (<div>Loading</div>)
@@ -35,7 +31,7 @@ const Profile: FC = () => {
     return (
         <>
         {   
-            currentUser["intra_id"] == params.id ?
+            currentUser["intra_id"] === params.id ?
                 <Dashboard />
             :
             <div className="container">
