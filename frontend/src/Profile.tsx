@@ -21,7 +21,7 @@ const Profile: FC = () => {
                     setUser(u.data)
             }).catch(e => {
                 toast.error(e);
-                navigate('404')
+                navigate('404');
             })
     }, [user, navigate, params.id])
 

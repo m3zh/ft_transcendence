@@ -30,10 +30,8 @@ const Dashboard: FC = () =>  {
                                             { user["title"] && <h6 className="m-b-10">{ user["title"] }</h6> }
                                             { user["mail"] && <h6 className="m-b-10">MP: { user["mail"] }</h6> } 
                                             <Link to="/editProfile" className="btn btn-sm btn-info mt-2">Edit Profile</Link>
-                                        </div>
-                                        <div className="col position-absolute end-0">
-                                            <Link to="/editProfile" className="btn btn-sm end-0 btn-success mx-2">Start Game</Link>
-                                            <Link to="/editProfile" className="btn btn-sm end-0 btn-danger mx-2">Start Chat</Link>
+                                            <Link to="/editProfile" className="btn btn-sm float-end btn-success mt-2 mx-2">Start Game</Link>
+                                            <Link to="/editProfile" className="btn btn-sm float-end btn-danger mt-2">Start Chat</Link>
                                         </div>
                                     </div>
                                 </div>

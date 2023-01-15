@@ -27,7 +27,8 @@ function Card({ title }) {
                 users && users.map((u) =>
                     <div key={ u["uid"] } className="card-body">
                       <p className="card-title">{ u["username"] }
-                      <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["status"]}</span></p>
+                        <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["status"]}</span>
+                      </p>
                     </div>)
               }
             </div>
