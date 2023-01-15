@@ -4,19 +4,15 @@ import { useEffect, useState } from 'react';
 
 function Card({ title }) {
   const [users, setUsers] = useState([])
-  console.log(users)
-  const [currStatus, setCurrStatus] = useState("")
-  let   status = {
-    online : "bg-success",
-    offline : "bg-danger",
-    InAgame : "bg-warning",
-  }
+  const status = new Map()
+  status.set("online", "bg-primary")
+  status.set("offline", "bg-danger")
+  status.set("in a game", "bg-warning")
 
   useEffect(() => {
     axios.get('http://localhost:3001/users').
       then( users => { 
         setUsers(users.data)
-        setCurrStatus(users.data.status)
       })
   }, [users]);
 
@@ -32,7 +28,7 @@ function Card({ title }) {
                 users && users.map((u) =>
                     <div key={ u["uid"] } className="card-body">
                       <p className="card-title">{ u["username"] }
-                      <span className="badge ${status.currStatus}">{u["status"]}</span></p>
+                      <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["status"]}</span></p>
                     </div>)
               }
             </div>

@@ -28,10 +28,10 @@ model Users {
 }
 
 model friends {
-    id Int @id @default(autoincrement())
-    requester String @unique
-    status String?
-    friends String?
+    id          Int @id   @default(autoincrement())
+    requester   String    @unique
+    status      String?
+    friends     String?
 }
 model Session {
   id        String   @id
