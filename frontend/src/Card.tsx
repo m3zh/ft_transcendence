@@ -1,6 +1,7 @@
-import React from 'react';
 import axios from 'axios';
+import React from 'react'
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 
 function Card({ title }) {
   const [users, setUsers] = useState([])
@@ -21,12 +22,13 @@ function Card({ title }) {
     axios.get('http://localhost:3001/users').then( users => { 
         if (title === 'Ranking') {
           let ranked = sortByScore(users.data)
+          console.log(ranked)
           setUsers(ranked)
         }
         else
           setUsers(users.data)
       })
-  }, [users]);
+  }, [users, title]);
 
   return (
       <>
@@ -39,14 +41,14 @@ function Card({ title }) {
               { 
                 users && users.map((u) =>
                     <div key={ u["uid"] } className="card-body">
-                      <p className="card-title">{ u["username"] }
+                      <Link style={{ color: 'black' }} className="card-title" to={`/users/${u["intra_id"]}`}>{ u["username"] }
                         { 
-                          title === 'Ranking' ?
-                            <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["max_score"]}</span>
+                          title == 'Ranking' ?
+                            <span className={`badge float-end ${status.get(u["status"])}`}>{u["max_score"]} points</span>
                           :
-                            <span className={`badge mx-1 ${status.get(u["status"])}`}>{u["status"]}</span>
+                            <span className={`badge float-end ${status.get(u["status"])}`}>{u["status"]}</span>
                         }
-                      </p>
+                      </Link>
                     </div>)
               }
             </div>
