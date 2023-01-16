@@ -27,7 +27,7 @@ const Dashboard: FC = () =>  {
                                         </div>
                                         <div className="profile-header-info">
                                             <h4 className="m-t-10 m-b-5">{ user["username"] }</h4>
-                                            { user["title"] && <h6 className="m-b-10">{ user["title"] }</h6> }
+                                            { user["title"] && <h6 className="m-b-10 fst-italic">{ user["title"] }</h6> }
                                             { user["mail"] && <h6 className="m-b-10">MP: { user["mail"] }</h6> } 
                                             <Link to="/editProfile" className="btn btn-sm btn-info mt-2">Edit Profile</Link>
                                             <Link to="/editProfile" className="btn btn-sm float-end btn-success mt-2 mx-2">Start Game</Link>

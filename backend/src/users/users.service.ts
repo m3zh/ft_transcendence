@@ -38,6 +38,7 @@ export class UsersService {
   remove(id: number) {
     return this.prisma.users.delete({ where: { uid: id } });
   }
+
   addfriends(friends: string, intra_id: number) {
     const amp = parseInt(friends);
     return this.prisma.users.update({
@@ -49,6 +50,7 @@ export class UsersService {
       },
     });
   }
+
   async deletefriends(friends: string) {
     const amp = parseInt(friends);
     const user = await this.prisma.users.findUnique({
@@ -65,6 +67,7 @@ export class UsersService {
       },
     });
   }
+  
   addblocked(blocked: string, idintra: number) {
     const amp = parseInt(blocked);
     return this.prisma.users.update({
