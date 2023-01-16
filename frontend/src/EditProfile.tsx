@@ -1,5 +1,5 @@
 import './style/Profile.css'
-import { useState, setState } from 'react';
+import { useState, FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import jsCookie from "js-cookie"
 import axios from 'axios';
@@ -7,25 +7,33 @@ import Avatar from 'react-avatar-edit'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import { setCurrentUser } from './providers/userProvider';
+import { RootState } from './providers/store';
 
-function EditProfile() {
+const EditProfile: FC = () =>  {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.userProvider.user);
-    let avatar = useSelector((state) => state.userProvider.user.avatar);
-    const MAX_SIZE = 711680;
-    let [username, setUsername] = useState(user.username);
-    let [title, setTitle] = useState("");
+    const user = useSelector((state: RootState) => state.userProvider.user);
+    let avatar = useSelector((state: RootState) => state.userProvider.user["avatar"]);
+    let [username, setUsername] = useState(user["username"]);
+    let [title, setTitle] = useState(user["title"]);
+    let [mail, setMail] = useState(user["mail"]);
     let [preview, setPreview] = useState(avatar);
 
     const onHandleUpdate = async(event) => {
         event.preventDefault();
         
-        let blob = null
-        let mimeType = null
-        let file = null
-        const image = new FormData()
+        // let blob = null
+        // let mimeType = null
+        // let file = null
+        // const image = new FormData()
 
+        if (mail && mail.length)
+        {
+            const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w\w+)+$/;
+            if (reg.test(mail) === false)  {
+                toast.error("Mail format not valid"); return ;
+            }
+        }
         //console.log(preview)
         // axios(preview)
         //     .then(res => {
@@ -45,12 +53,12 @@ function EditProfile() {
                     const first_login = false
                     avatar = preview;
                     axios({
-                        url: "http://localhost:3001/users/" + user.intra_id,
+                        url: "http://localhost:3001/users/" + user["intra_id"],
                         method: "PATCH",
                         headers: {
                             Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
                         },
-                        data: { username, avatar, first_login }
+                        data: { username, avatar, first_login, mail, title }
                     }).then(res => {
                         toast.success("Success!", { position: toast.POSITION.TOP_RIGHT });
                         dispatch(setCurrentUser(res.data))
@@ -69,7 +77,7 @@ function EditProfile() {
         <>
             <div className="container">
                 {
-                    user.first_login ?
+                    user["first_login"] ?
                         <div className="row profile-header mt-5">
                             <div className="profile-header-content row align-items-start">
                                 <h1 className="m-10 text-center">Welcome to the platform!</h1>
@@ -92,15 +100,17 @@ function EditProfile() {
                                                 preview ?
                                                 <img style={{ objectFit: "cover" }} className="img-fluid"  src={ preview } alt="Preview"/>
                                                 :
-                                                <img style={{ objectFit: "cover" }} className="img-fluid" src={ user.avatar } alt="Preview"/>
+                                                <img style={{ objectFit: "cover" }} className="img-fluid" src={ user["avatar"] } alt="Preview"/>
                                             }
                                         </div>
                                         <div className="profile-header-info">
                                             <form>
                                                 <label>Change your username</label><br></br>
-                                                <input style={{ placeholderTextColor: "gray" }} className="m-t-10 m-b-5" placeholder={ user.username } onChange={ (e)=> setUsername(e.target.value) }/><br></br>
+                                                <input className="m-t-10 m-b-5" placeholder={ user["username"] } onChange={ (e)=> setUsername(e.target.value) }/><br></br>
                                                 <label>Wanna add a personal note?</label><br></br>
-                                                <input className="m-t-10 m-b-5" placeholder="ex: the best player ever" onChange={ (e)=> setTitle(e.target.value) }/><br></br>
+                                                <input maxLength={32} className="m-t-10 m-b-5" placeholder={ user["title"] } onChange={ (e)=> setTitle(e.target.value) }/><br></br>
+                                                <label>Wanna change email?</label><br></br>
+                                                <input className="m-t-10 m-b-5" placeholder={ user["mail"] } onChange={ (e)=> setMail(e.target.value) }/><br></br>                                               
                                                 <button type="submit" onClick={ (event) => onHandleUpdate(event) } className="btn btn-sm btn-warning mt-3">Update Profile</button>
                                             </form>
                                         </div>
@@ -112,9 +122,7 @@ function EditProfile() {
                                             height={295}
                                             onCrop={onCrop}
                                             onClose={onClose}
-                                            scale={1.2}
                                             src={ avatar }
-                                            alt="Avatar"
                                         />
                                     </div>
 
@@ -124,7 +132,7 @@ function EditProfile() {
                     </div>
                 </div>
             </div>
-            <ToastContainer autoClose={500}/>
+            <ToastContainer autoClose={1000}/>
         </>
     );
                                         

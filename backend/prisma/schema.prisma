@@ -19,11 +19,20 @@ model Users {
   dblauth       Boolean  @default(false)
   first_login   Boolean  @default(true)
   mail          String?  @unique
+  status        String?  @default("online")
+  title         String?  @default("A newbie pong player")
+  max_score     Int      @default(0)
   friends       String[]
   blacklist     String[]
   groups        String[]
 }
 
+model friends {
+    id          Int @id   @default(autoincrement())
+    requester   String    @unique
+    status      String?
+    friends     String?
+}
 model Session {
   id        String   @id
   sid       String   @unique
