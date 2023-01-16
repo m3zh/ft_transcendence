@@ -1,6 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import Pong from "./Pong.jsx";
+import useSocketManager from 'socket.io-client'
 
 function GameMenu() {
     const [activeGames, setActiveGames] = useState([]);
@@ -54,35 +56,55 @@ function GameMenu() {
 
     useEffect(() => {
 
-        /* updateActiveGames */
+        /* updateActiveGames
         axios({
             url: "http://localhost:3001/games/active",
             method: "GET"
         }).then(res => {
             setActiveGames(res.data);
         }).catch(err => console.error(err))
+        * */
     }, [onHandleGame]);
+
+    const sm = useSocketManager();
+
+    const onPing = () => {
+        console.log("pinging...")
+        sm.emit({
+            event: 'ping',
+        });
+    };
 
     return (
         <div className="d-flex justify-content-center">
             <div className="align-items-center">
-                {   activeGames.length ?
-                        <div className="activeGamesContainer">
-                            { activeGames.map((game =>
-                                    <div className="activeGameContainer">
-                                        <p>{game.player1}  vs  {game.player2}</p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    :
-                        <p className="">There is actually no game...</p>
-                }
                 {
-                    userInQueue ?
-                        <p>Game created, waiting for someone to join...</p>
+                    0 === 1 ?
+                            <Pong />
                     :
-                        <button className="" onClick={ (event) => onHandleGame(event) }>Find Game</button>
+                        <div className="gameMenu">
+                            {   activeGames.length ?
+                                    <div className="activeGames">
+                                        { activeGames.map((game =>
+                                                <div className="activeGame">
+                                                    <p>{game.player1}  vs  {game.player2}</p>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                :
+                                    <p className="">There is actually no game...</p>
+                            }
+                            {
+                                userInQueue ?
+                                    <p>Game created, waiting for someone to join...</p>
+                                :
+
+                                    <button className="" onClick={onHandleGame}>Find Game</button>
+                            }
+                            <button onClick={onPing}>ping</button>
+
+                        </div>
                 }
             </div>
         </div>

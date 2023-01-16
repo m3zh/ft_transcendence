@@ -25,6 +25,8 @@ model Users {
   friends       String[]
   blacklist     String[]
   groups        String[]
+  inQueue       Boolean  @default(false)
+  games         Int[]
 }
 
 model friends {

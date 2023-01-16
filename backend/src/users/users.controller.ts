@@ -97,4 +97,9 @@ export class UsersController {
   deleteblocked(@Param('id') blocked: string, @Request() req) {
     return this.usersService.deleteblocked(blocked, req.user.login42);
   }
+
+  @Get('queue')
+  queue() {
+    return this.usersService.queue();
+  }
 }

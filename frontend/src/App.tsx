@@ -12,13 +12,8 @@ import Home from './Home'
 import Dashboard from './Dashboard'
 import Profile from './Profile'
 import EditProfile from "./EditProfile";
-import Pong from './pong/Pong'
-import NotFound from './NotFound'
-import GameMenu from "./pong/GameMenu";
-
 
 const App: FC = () =>  {
-
     return (
         <Router >
                 <Navbar />

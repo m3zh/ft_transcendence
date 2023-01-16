@@ -19,5 +19,9 @@ export class CreateUserDto {
     blacklist: string[];
     @ApiProperty()
     groups: string[]
+    @ApiProperty()
+    inQueue: boolean
+    @ApiProperty()
+    games: number[]
 }
 

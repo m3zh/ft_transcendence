@@ -12,6 +12,7 @@ import { JwtService } from "@nestjs/jwt";
 import { GamesController } from './games/games.controller';
 import { GamesModule } from './games/games.module';
 import {GamesService} from "./games/games.service";
+import { GameGateway } from './game/game/game.gateway';
 
 @Module({
   imports: [
@@ -23,6 +24,6 @@ import {GamesService} from "./games/games.service";
     ProfilsModule, GamesModule,
   ],
   controllers: [AppController, GamesController],
-  providers: [AppService, AuthService, JwtService, GamesService],
+  providers: [AppService, AuthService, JwtService, GamesService, GameGateway],
 })
 export class AppModule {}
