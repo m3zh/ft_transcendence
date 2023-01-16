@@ -53,7 +53,7 @@ function Navbar() {
                                     </span>
                                 </button>
                                 <SearchBar/>
-                                <ul className="navbar-nav mb-2 mb-lg-0">
+                                <ul className="navbar-nav mx-2 mb-2 mb-lg-0">
                                     <li className="nav-item">
                                         <Link to="*" className="nav-link" onClick={ (event) => onHandleClick(event) }>Log Out</Link>
                                     </li>

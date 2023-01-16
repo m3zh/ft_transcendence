@@ -5,6 +5,8 @@ import { useEffect, useState, FC } from 'react';
 import { RootState } from './providers/store';
 import axios from 'axios';
 import Dashboard from './Dashboard';
+import LoadingPage from './LoadingPage'
+import jsCookie from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify';
 
 const Profile: FC = () => {
@@ -15,18 +17,23 @@ const Profile: FC = () => {
     
 
     useEffect(() => {
-        axios.get("http://localhost:3001/users/" + params.id)
+        axios({
+                url: "http://localhost:3001/users/" + params.id,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+                }
+            })
             .then(
                 u => {
                     setUser(u.data)
             }).catch(e => {
                 toast.error(e);
-                navigate('404');
             })
     }, [user, navigate, params.id])
 
     if (!user)
-        return (<div>Loading</div>)
+        return (<LoadingPage/>)
 
     return (
         <>
