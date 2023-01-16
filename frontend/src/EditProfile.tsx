@@ -1,12 +1,13 @@
 import './style/Profile.css'
 import { useState, FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { routes } from "./api/routes";
 import jsCookie from "js-cookie"
 import axios from 'axios';
 import Avatar from 'react-avatar-edit'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { setCurrentUser } from './providers/userProvider';
+import { setToken, setCurrentUser } from './providers/userProvider';
 import { RootState } from './providers/store';
 
 const EditProfile: FC = () =>  {
@@ -18,6 +19,27 @@ const EditProfile: FC = () =>  {
     let [title, setTitle] = useState(user["title"]);
     let [mail, setMail] = useState(user["mail"]);
     let [preview, setPreview] = useState(avatar);
+
+    const onHandleDelete = async(event) => {
+        event.preventDefault();
+        console.log("delete")
+        axios({
+            url: "http://localhost:3001/users/" + user["intra_id"],
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+            }
+        })
+        .then(
+            res => {
+                console.log(res)
+                dispatch(setToken(''));
+                dispatch(setCurrentUser(''));
+                window.location.href = routes.logout;
+        }).catch(e => {
+            toast.error(e);
+        })
+    }
 
     const onHandleUpdate = async(event) => {
         event.preventDefault();
@@ -104,7 +126,7 @@ const EditProfile: FC = () =>  {
                                             }
                                         </div>
                                         <div className="profile-header-info">
-                                            <form>
+                                            <form className="d-grid">
                                                 <label>Change your username</label><br></br>
                                                 <input className="m-t-10 m-b-5" placeholder={ user["username"] } onChange={ (e)=> setUsername(e.target.value) }/><br></br>
                                                 <label>Wanna add a personal note?</label><br></br>
@@ -112,6 +134,7 @@ const EditProfile: FC = () =>  {
                                                 <label>Wanna change email?</label><br></br>
                                                 <input className="m-t-10 m-b-5" placeholder={ user["mail"] } onChange={ (e)=> setMail(e.target.value) }/><br></br>                                               
                                                 <button type="submit" onClick={ (event) => onHandleUpdate(event) } className="btn btn-sm btn-warning mt-3">Update Profile</button>
+                                                <button type="submit" onClick={ (event) => onHandleDelete(event) } className="btn btn-sm btn-danger mt-3">Delete Account</button>
                                             </form>
                                         </div>
                                     </div>

@@ -36,7 +36,7 @@ export class UsersService {
   }
 
   remove(id: number) {
-    return this.prisma.users.delete({ where: { uid: id } });
+    return this.prisma.users.delete({ where: { intra_id: id } });
   }
 
   addfriends(friends: string, intra_id: number) {
