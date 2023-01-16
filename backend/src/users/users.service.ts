@@ -104,11 +104,14 @@ export class UsersService {
         intra_id: idintra,
       },
     });
+    console.log(user)
     const find = user.friends.indexOf(blocked);
+    console.log(find)
     if (find > -1) {
       throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND);
     }
     user.blacklist.splice(find, 1);
+    console.log(user.blacklist)
     return this.prisma.users.update({
       where: { intra_id: idintra },
       data: {

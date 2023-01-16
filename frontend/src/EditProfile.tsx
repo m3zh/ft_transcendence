@@ -62,7 +62,7 @@ const EditProfile: FC = () =>  {
                     }).then(res => {
                         toast.success("Success!", { position: toast.POSITION.TOP_RIGHT });
                         dispatch(setCurrentUser(res.data))
-                        sessionStorage.setItem('user', JSON.stringify(res.data));
+                        //sessionStorage.setItem('user', JSON.stringify(res.data));
                         navigate("/")
                     }).catch(err => toast.error(err, { position: toast.POSITION.TOP_RIGHT }))
             //     })
