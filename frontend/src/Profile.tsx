@@ -17,8 +17,36 @@ const Profile: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [blocked,setBlocked] = useState(currentUser["blacklist"].includes(params.id))
+    const [friend,setFriend] = useState(currentUser["friends"].includes(params.id))
     const [user, setUser] = useState(null)
     
+    function onBefriendUser() {
+        let request = "http://localhost:3001/users/friends/add/";
+        if (friend)
+            request = "http://localhost:3001/users/friends/delete/";
+        const friends = params.id
+        console.log(friends)
+        console.log(request)
+        axios({
+            url: request,
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${jsCookie.get('jwt_token')}`,
+            },
+            data: { friends }
+        })
+        .then(
+            u => {
+                dispatch(setCurrentUser(u.data))
+                console.log(currentUser["blacklist"])
+                console.log(currentUser)
+                setFriend(!friend)
+        }).catch(e => {
+            toast.error(e);
+        })
+    }
+
+
     function onBlockUser() {
         let request = "http://localhost:3001/users/block/add/" + params.id;
         if (blocked)
@@ -79,7 +107,9 @@ const Profile: FC = () => {
                                     <div className="profile-header-info">
                                         <h4 className="m-t-10 m-b-5">{ user["username"] }
                                             <span className="mx-5">
-                                                <button className="btn btn-sm top-0 end-0 btn-success mx-2">Add Friend</button>
+                                                <button onClick={ onBefriendUser } className="btn btn-sm top-0 end-0 btn-success mx-2" disabled={blocked}>
+                                                    {  friend ? "Unfriend" : "Add Friend"  }
+                                                </button>
                                                 <button onClick={ onBlockUser } className="btn btn-sm top-0 end-0 btn-danger mx-2">
                                                     {  blocked ? "Unblock" : "Block User"  }
                                                 </button>

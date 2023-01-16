@@ -51,17 +51,17 @@ export class UsersService {
     });
   }
 
-  async deletefriends(friends: string) {
+  async deletefriends(friends: string, idintra: number) {
     const amp = parseInt(friends);
     const user = await this.prisma.users.findUnique({
       where: {
-        intra_id: amp,
+        intra_id: idintra,
       },
     });
     const find = user.friends.indexOf(friends);
     user.friends.splice(find, 1);
     return this.prisma.users.update({
-      where: { intra_id: amp },
+      where: { intra_id: idintra },
       data: {
         friends: user.friends,
       },
@@ -81,7 +81,6 @@ export class UsersService {
   }
 
   async requestfriends(friends: CreateFriendsDto, demand: string) {
-    console.log(friends + '\n ----------\n' + demand);
     return this.prisma.friends.createMany({
       data: [
         {
@@ -104,14 +103,11 @@ export class UsersService {
         intra_id: idintra,
       },
     });
-    console.log(user)
     const find = user.friends.indexOf(blocked);
-    console.log(find)
     if (find > -1) {
       throw new HttpException('DATA NOT FOUND', HttpStatus.NOT_FOUND);
     }
     user.blacklist.splice(find, 1);
-    console.log(user.blacklist)
     return this.prisma.users.update({
       where: { intra_id: idintra },
       data: {

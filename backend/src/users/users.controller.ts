@@ -73,13 +73,15 @@ export class UsersController {
   @Post('friends/add')
   @UseGuards(JwtAuthGuard)
   addfriends(@Body('friends') friends: string, @Request() req) {
+    console.log("add" + friends)
     return this.usersService.addfriends(friends, req.user.login42);
   }
+
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
-  @Delete('friends/delete')
-  deletefriends(@Body('friends') friends: string) {
-    return this.usersService.deletefriends(friends);
+  @Post('friends/delete')
+  deletefriends(@Body('friends') friends: string, @Request() req) {
+    return this.usersService.deletefriends(friends, req.user.login42);
   }
 
   @ApiProperty({
@@ -90,7 +92,6 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Post('friends/request')
   requestfriends(@Body() createfriends: CreateFriendsDto, @Request() req) {
-    console.log(createfriends + '\n ----------\n' + req.user.login42);
     return this.usersService.requestfriends(createfriends, req.user.login42);
   }
 
