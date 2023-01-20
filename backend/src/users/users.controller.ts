@@ -33,12 +33,14 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
+
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
   @Get(':uid')
   async findOne(@Param('uid') id: string, @Request() req) {
     return this.usersService.findOne(+id);
   }
+
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
@@ -46,6 +48,7 @@ export class UsersController {
     console.log(updateUserDto);
     return this.usersService.update(+id, updateUserDto);
   }
+
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
   @Get('/userid/id')
@@ -57,12 +60,14 @@ export class UsersController {
   // update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
   //   return this.usersService.update(+req.user.login42, updateUserDto);
   // }
+
   @ApiBearerAuth('JWT-auth')
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
   @ApiBearerAuth('JWT-auth')
   @Post('friends/add')
   @UseGuards(JwtAuthGuard)
@@ -75,6 +80,7 @@ export class UsersController {
   deletefriends(@Body('friends') friends: string) {
     return this.usersService.deletefriends(friends);
   }
+
   @ApiProperty({
     description: 'Add request for a friends',
   })
@@ -86,11 +92,13 @@ export class UsersController {
     console.log(createfriends + '\n ----------\n' + req.user.login42);
     return this.usersService.requestfriends(createfriends, req.user.login42);
   }
+
   @UseGuards(JwtAuthGuard)
   @Get('block/add/:blocked')
   addblocked(@Param('blocked') blocked: string, @Request() req) {
     return this.usersService.addblocked(blocked, req.user.login42);
   }
+  
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
   @Get('block/delete/:id')

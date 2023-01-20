@@ -13,7 +13,6 @@ function Login() {
 
     const onHandleSubmit = useCallback((event) => {
         event.preventDefault();
-        console.log("lol")
         window.location.href = routes.login;
     }, []);
 
